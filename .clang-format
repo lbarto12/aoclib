@@ -1,0 +1,14 @@
+BasedOnStyle: LLVM
+IndentWidth: 4
+TabWidth: 4
+ColumnLimit: 120
+PointerAlignment: Left
+DerivePointerAlignment: false
+AllowShortFunctionsOnASingleLine: All
+AllowShortIfStatementsOnASingleLine: WithoutElse
+AllowShortLoopsOnASingleLine: true
+AllowShortBlocksOnASingleLine: Empty
+BinPackArguments: true
+BinPackParameters: true
+PenaltyBreakBeforeFirstCallParameter: 19
+PenaltyReturnTypeOnItsOwnLine: 60

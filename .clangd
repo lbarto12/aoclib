@@ -1,0 +1,10 @@
+Completion:
+  HeaderInsertion: Never
+Style:
+  AngledHeaders: ["SFML/.*"]
+Diagnostics:
+  MissingIncludes: None
+  UnusedIncludes: None
+  Suppress: [pp_including_mainfile_in_preamble]
+CompileFlags:
+  Add: [-std=c++23]
