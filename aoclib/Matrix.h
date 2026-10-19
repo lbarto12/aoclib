@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Vector2.h"
-#include <assert.h>
+#include "errors.h"
 #include <iostream>
 #include <vector>
 
@@ -10,8 +10,12 @@ namespace aoc {
 // Represents a matrix
 // Offers some basic matrix methods
 template <typename T> struct Matrix2D {
-    Matrix2D(std::initializer_list<std::vector<T>> init) { mtx = init; }
-    Matrix2D(std::vector<std::vector<T>> init) { mtx = init; }
+    using Row = std::vector<T>;
+    using Grid = std::vector<Row>;
+
+    Matrix2D() = default;
+    Matrix2D(std::initializer_list<Row> init) : mtx(init) {}
+    Matrix2D(Grid init) : mtx(std::move(init)) {}
 
     // Correctness assertions for matricies
     struct Assert {
@@ -29,12 +33,12 @@ template <typename T> struct Matrix2D {
     // transposes a matrix.
     // in this particular function, for vectors.
     // asserts the correctness of the vector
-    Matrix2D<T> transpose() {
-        assert(Assert::NotEmpty(mtx));
-        assert(Assert::CanTranspose(mtx));
+    Matrix2D<T> transpose() const {
+        if (!Assert::NotEmpty()) throw new EmptyMatrixError();
+        if (!Assert::CanTranspose()) throw new InvalidMatrixError("matrix is not transposable");
 
         // create a transposed, empty matrix from the input
-        auto res = std::vector<std::vector<T>>(mtx[0].size(), std::vector<T>(mtx.size(), 0));
+        auto res = std::vector<std::vector<T>>(mtx[0].size(), std::vector<T>(mtx.size(), T{}));
 
         for (size_t i = 0; i < mtx.size(); ++i) {
             for (size_t j = 0; j < mtx[0].size(); ++j) {
@@ -66,9 +70,9 @@ template <typename T> struct Matrix2D {
     std::vector<std::vector<T>>::const_iterator end() const { return mtx.end(); }
 
   public: // accessors
-    T& operator[](size_t index) { return mtx[index]; }
+    std::vector<T>& operator[](size_t index) { return mtx[index]; }
 
-    const T& operator[](size_t index) const { return mtx[index]; }
+    const std::vector<T>& operator[](size_t index) const { return mtx[index]; }
 
     T& at(const Vector2i& pos) { return mtx[pos.y][pos.x]; }
     const T& at(const Vector2i& pos) const { return mtx[pos.y][pos.x]; }
