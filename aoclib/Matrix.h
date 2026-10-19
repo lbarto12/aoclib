@@ -36,8 +36,8 @@ template <typename T> struct Matrix2D {
         // create a transposed, empty matrix from the input
         auto res = std::vector<std::vector<T>>(mtx[0].size(), std::vector<T>(mtx.size(), 0));
 
-        for (int i = 0; i < mtx.size(); ++i) {
-            for (int j = 0; j < mtx[0].size(); ++j) {
+        for (size_t i = 0; i < mtx.size(); ++i) {
+            for (size_t j = 0; j < mtx[0].size(); ++j) {
                 res[j][i] = mtx[i][j];
             }
         }
