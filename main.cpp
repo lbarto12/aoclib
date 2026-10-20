@@ -1,7 +1,7 @@
 #include <iostream>
 
-#include "aoclib/Matrix.h"
-#include "aoclib/Vector2.h"
+#include "aoclib/ds/Matrix.h"
+#include "aoclib/ds/Vector2.h"
 #include "aoclib/timing.h"
 
 #include <thread>

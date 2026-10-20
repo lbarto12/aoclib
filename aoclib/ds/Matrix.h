@@ -1,7 +1,7 @@
 #pragma once
 
+#include "../errors.h"
 #include "Vector2.h"
-#include "errors.h"
 #include <iostream>
 #include <vector>
 
