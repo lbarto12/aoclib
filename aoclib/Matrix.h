@@ -34,8 +34,8 @@ template <typename T> struct Matrix2D {
     // in this particular function, for vectors.
     // asserts the correctness of the vector
     Matrix2D<T> transpose() const {
-        if (!Assert::NotEmpty()) throw new EmptyMatrixError();
-        if (!Assert::CanTranspose()) throw new InvalidMatrixError("matrix is not transposable");
+        if (!Assert::NotEmpty(mtx)) throw new EmptyMatrixError();
+        if (!Assert::CanTranspose(mtx)) throw new InvalidMatrixError("matrix is not transposable");
 
         // create a transposed, empty matrix from the input
         auto res = std::vector<std::vector<T>>(mtx[0].size(), std::vector<T>(mtx.size(), T{}));

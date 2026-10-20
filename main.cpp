@@ -25,7 +25,7 @@ int main() {
 
     Vector2i v = {0, 0};
 
-    for (const auto x : v.adjacent()) {
+    for (const auto x : v.adjacent8()) {
         std::cout << x << std::endl;
     }
 
