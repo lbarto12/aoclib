@@ -20,7 +20,7 @@ std::vector<str> str::split() const {
     return result;
 }
 
-std::vector<str> str::split(std::string_view sep, int maxsplit = -1) const {
+std::vector<str> str::split(std::string_view sep, int maxsplit) const {
     if (sep.empty()) throw std::invalid_argument("empty separator");
     std::vector<str> result;
     std::size_t i = 0;

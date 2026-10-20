@@ -2,8 +2,8 @@
 
 namespace aoc {
 
-str str::operator()(std::optional<std::ptrdiff_t> start = std::nullopt,
-                    std::optional<std::ptrdiff_t> stop = std::nullopt, std::ptrdiff_t step = 1) const {
+str str::operator()(std::optional<std::ptrdiff_t> start, std::optional<std::ptrdiff_t> stop,
+                    std::ptrdiff_t step) const {
     if (step == 0) throw std::invalid_argument("slice step cannot be zero");
     const auto len = static_cast<std::ptrdiff_t>(size());
 

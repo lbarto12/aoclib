@@ -1,5 +1,6 @@
 #include <iostream>
 
+#include "aoclib/debug.h"
 #include "aoclib/ds/Matrix.h"
 #include "aoclib/ds/Vector2.h"
 #include "aoclib/files/File.h"
@@ -11,18 +12,16 @@
 using namespace aoc;
 
 int main() {
-    File f = "input.txt";
-    for (const auto& s : f.readlines()) {
-        std::cout << s << std::endl;
+    File file = "input.txt";
+    std::vector<std::tuple<char, int>> instructions;
+    for (const auto& line : file.readlines()) {
+        str ln = str(line).strip();
+        instructions.push_back({ln[0], int(ln(1))});
     }
 
-    str x = "hello";
-
-    auto xx = str("").join(std::vector<str>{"1", "2", "3"});
-
-    std::cout << xx << std::endl;
-
-    std::cout << x << std::endl;
+    for (auto [i, inst] : enumerate(instructions)) {
+        std::cout << i << " " << std::get<char>(inst) << std::endl;
+    }
 }
 
 // void longfunc(int x) { std::this_thread::sleep_for(std::chrono::seconds(x)); }

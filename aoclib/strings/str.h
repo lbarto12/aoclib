@@ -24,7 +24,7 @@ class str : public std::string {
     // Strip whitespace off both ends of string
     str strip() const;
     std::vector<str> split() const;
-    std::vector<str> split(std::string_view sep, int maxsplit) const;
+    std::vector<str> split(std::string_view sep, int maxsplit = -1) const;
     template <typename Range> str join(const Range& parts) const;
 
   public: // properties
@@ -44,7 +44,8 @@ class str : public std::string {
     inline operator std::size_t() const;
 
   public: // slice as operator
-    str operator()(std::optional<std::ptrdiff_t> start, std::optional<std::ptrdiff_t> stop, std::ptrdiff_t step) const;
+    str operator()(std::optional<std::ptrdiff_t> start = std::nullopt,
+                   std::optional<std::ptrdiff_t> stop = std::nullopt, std::ptrdiff_t step = 1) const;
 };
 } // namespace aoc
 

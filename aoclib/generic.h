@@ -57,4 +57,16 @@ template <typename... Iterables> auto zip(const Iterables&... iters) {
     return res;
 }
 
+template <typename Range> auto enumerate(const Range& iterable, std::size_t start = 0) {
+    using T = std::decay_t<decltype(*std::begin(iterable))>;
+    std::vector<std::pair<int, T>> res;
+
+    if constexpr (requires { std::size(iterable); }) res.reserve(std::size(iterable));
+
+    for (const auto& v : iterable) {
+        res.emplace_back(start++, v);
+    }
+    return res;
+}
+
 } // namespace aoc
