@@ -1,5 +1,3 @@
-#pragma once
-
 #include "str.h"
 
 namespace aoc {

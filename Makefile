@@ -2,7 +2,7 @@ CXX = g++
 CXXFLAGS = -Wall -Wextra -std=c++20 -MMD -MP
 TARGET = main
 
-SRCS = $(wildcard *.cpp)
+SRCS = $(shell find . -name '*.cpp')
 OBJS = $(SRCS:.cpp=.o)
 DEPS = $(OBJS:.o=.d)
 

@@ -18,6 +18,10 @@ int main() {
 
     str x = "hello";
 
+    auto xx = str("").join(std::vector<str>{"1", "2", "3"});
+
+    std::cout << xx << std::endl;
+
     std::cout << x << std::endl;
 }
 

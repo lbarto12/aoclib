@@ -8,3 +8,8 @@ Diagnostics:
   Suppress: [pp_including_mainfile_in_preamble]
 CompileFlags:
   Add: [-std=c++23]
+---
+If:
+  PathMatch: .*\.tpp
+CompileFlags:
+  Add: [-xc++-header]
