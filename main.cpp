@@ -18,7 +18,7 @@ int main() {
 
     str x = "hello";
 
-    std::cout << x(1, -1) << std::endl;
+    std::cout << x << std::endl;
 }
 
 // void longfunc(int x) { std::this_thread::sleep_for(std::chrono::seconds(x)); }

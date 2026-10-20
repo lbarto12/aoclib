@@ -4,9 +4,12 @@
 #include <stdexcept>
 #include <string>
 #include <string_view>
+#include <vector>
 
 namespace aoc {
 class str : public std::string {
+    static constexpr const char* WS = " \t\n\r\f\v";
+
   public: // b5
     using std::string::string;
 
@@ -17,11 +20,33 @@ class str : public std::string {
   public: // extra pythonic stuff
     // Strip whitespace off both ends of string
     str strip() const {
-        constexpr const char* ws = " \t\n\r\f\v";
-        const auto start = find_first_not_of(ws);
+        const auto start = find_first_not_of(WS);
         if (start == npos) return {};
-        const auto end = find_last_not_of(ws);
+        const auto end = find_last_not_of(WS);
         return substr(start, end - start + 1);
+    }
+
+    std::vector<str> split() const {
+        std::vector<str> result;
+        std::size_t i = 0;
+        while ((i = find_first_not_of(WS, i)) != std::string::npos) {
+            std::size_t j = find_first_of(WS, i);
+            result.push_back(substr(i, j - i));
+            i = j;
+        }
+        return result;
+    }
+
+    std::vector<str> split(std::string_view sep, int maxsplit = -1) const {
+        if (sep.empty()) throw std::invalid_argument("empty separator");
+        std::vector<str> result;
+        std::size_t i = 0;
+        for (std::size_t j = 0; maxsplit != 0 && (j = find(sep, i)) != std::string::npos; --maxsplit) {
+            result.push_back(substr(i, j - i));
+            i = j + sep.size();
+        }
+        result.push_back(substr(i));
+        return result;
     }
 
   public: // slice as operator
