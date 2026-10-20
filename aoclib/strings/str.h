@@ -6,6 +6,8 @@
 #include <string_view>
 #include <vector>
 
+#include "../generic.h"
+
 namespace aoc {
 class str : public std::string {
     static constexpr const char* WS = " \t\n\r\f\v";
@@ -22,6 +24,14 @@ class str : public std::string {
     str strip() const;
     std::vector<str> split() const;
     std::vector<str> split(std::string_view sep, int maxsplit) const;
+
+  public: // properties
+    bool isdigit() const;
+    bool isalpha() const;
+    bool isspace() const;
+
+    str upper() const;
+    str lower() const;
 
   public: // slice as operator
     str operator()(std::optional<std::ptrdiff_t> start, std::optional<std::ptrdiff_t> stop, std::ptrdiff_t step) const;
