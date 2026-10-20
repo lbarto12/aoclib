@@ -6,6 +6,7 @@
 #include <vector>
 
 #include "../errors.h"
+#include "../strings/str.h"
 
 namespace aoc {
 struct File {
@@ -24,15 +25,15 @@ struct File {
         }
     }
 
-    std::string read() {
+    str read() {
         std::stringstream buffer;
         buffer << f.rdbuf();
         this->reset();
         return buffer.str();
     }
 
-    std::vector<std::string> readlines() {
-        std::vector<std::string> result;
+    std::vector<str> readlines() {
+        std::vector<str> result;
         std::string line;
         while (std::getline(f, line)) {
             result.push_back(line);

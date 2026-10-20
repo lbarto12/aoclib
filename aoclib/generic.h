@@ -1,5 +1,8 @@
 #pragma once
 
+#include <iterator>
+#include <numeric>
+#include <type_traits>
 #include <vector>
 
 namespace aoc {
@@ -67,6 +70,11 @@ template <typename Range> auto enumerate(const Range& iterable, std::size_t star
         res.emplace_back(start++, v);
     }
     return res;
+}
+
+template <typename Range, typename T = std::decay_t<decltype(*std::begin(std::declval<const Range&>()))>>
+T sum(const Range& iterable, T start = T{}) {
+    return std::accumulate(std::begin(iterable), std::end(iterable), start);
 }
 
 } // namespace aoc
