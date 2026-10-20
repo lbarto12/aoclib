@@ -11,4 +11,8 @@ struct InvalidMatrixError : public std::runtime_error {
 struct EmptyMatrixError : public std::runtime_error {
     explicit EmptyMatrixError(const std::string& what = "Empty Matrix") : std::runtime_error(what) {}
 };
+
+struct FileOpenFailedError : public std::runtime_error {
+    explicit FileOpenFailedError(const std::string& what = "File could not be opened") : std::runtime_error(what) {}
+};
 } // namespace aoc
