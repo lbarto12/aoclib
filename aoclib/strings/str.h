@@ -82,7 +82,40 @@ class str : public std::string {
     // slice operator
     str operator()(std::optional<std::ptrdiff_t> start = std::nullopt,
                    std::optional<std::ptrdiff_t> stop = std::nullopt, std::ptrdiff_t step = 1) const;
+
+    // assign anything std::string can, returning str&
+    template <typename T>
+        requires(!std::derived_from<std::remove_cvref_t<T>, str>)
+    str& operator=(T&& x);
+
+    // append anything std::string can, returning str&
+    template <typename T> str& operator+=(T&& x);
+
+  public: // std::string methods, re-typed to return str instead of std::string
+    str substr(size_type pos = 0, size_type n = npos) const;
+
+    template <typename... Args> str& append(Args&&... args);
+    template <typename... Args> str& assign(Args&&... args);
+    template <typename... Args> str& replace(Args&&... args);
+
+    // iterator overloads still return iterators
+    template <typename... Args> decltype(auto) insert(Args&&... args);
+    template <typename... Args> decltype(auto) erase(Args&&... args);
 };
+
+// anything that can be concatenated onto a str
+template <typename T>
+concept StrLike = std::convertible_to<const T&, std::string_view> || std::same_as<T, char>;
+
+// concatenation: str + x, x + str
+template <StrLike T> str operator+(str lhs, const T& rhs);
+template <StrLike T>
+    requires(!std::derived_from<T, str>)
+str operator+(const T& lhs, const str& rhs);
+
+// repetition, like python: str("ab") * 3 == "ababab"
+template <std::integral N> str operator*(const str& s, N n);
+template <std::integral N> str operator*(N n, const str& s);
 
 } // namespace aoc
 
@@ -92,3 +125,4 @@ template <> struct std::hash<aoc::str> : std::hash<std::string> {};
 // templated includes
 #include "conv.tpp"
 #include "join.tpp"
+#include "ops.tpp"
