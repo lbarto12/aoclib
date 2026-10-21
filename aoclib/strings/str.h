@@ -83,7 +83,11 @@ class str : public std::string {
     str operator()(std::optional<std::ptrdiff_t> start = std::nullopt,
                    std::optional<std::ptrdiff_t> stop = std::nullopt, std::ptrdiff_t step = 1) const;
 };
+
 } // namespace aoc
+
+// hash compat
+template <> struct std::hash<aoc::str> : std::hash<std::string> {};
 
 // templated includes
 #include "conv.tpp"
