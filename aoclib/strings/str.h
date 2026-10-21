@@ -23,6 +23,18 @@ class str : public std::string {
     str(const std::string& s) : std::string(s) {}
     str(std::string&& s) noexcept : std::string(std::move(s)) {}
 
+    // cool extras
+    template <typename N>
+        requires std::is_arithmetic_v<N> && (!std::same_as<N, char>) && (!std::same_as<N, bool>)
+    explicit str(N n) {
+        char buf[64];
+        auto [end, ec] = std::to_chars(buf, buf + sizeof buf, n);
+        assign(buf, end);
+    }
+
+    explicit str(char c) : std::string(1, c) {}                 // str('a') -> "a"
+    explicit str(bool b) : std::string(b ? "true" : "false") {} // like Python
+
   public: // extra pythonic stuff
     // Strip whitespace off both ends of string
     str strip() const;

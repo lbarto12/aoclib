@@ -13,35 +13,24 @@
 using namespace aoc;
 
 int main() {
-    File file = "input.txt";
-    vec<std::tuple<char, int>> instructions;
-    for (const auto& line : file.readlines()) {
-        str ln = line.strip();
-        instructions.push_back({ln[0], int(ln(1))});
-    }
-
-    int pos = 50;
-    int p1 = 0;
-
-    for (auto& [dir, off] : instructions) {
-        pos = mod(pos + (dir == 'R' ? off : -off), 100);
-        p1 += pos == 0;
-    }
-
-    std::cout << "part 1: " << p1 << std::endl;
-
-    // part 2
-    pos = 50;
-    int p2 = 0;
-
-    for (auto& [dir, off] : instructions) {
-        for (int i = 0; i < off; ++i) {
-            pos = mod(pos + (dir == 'R' ? 1 : -1), 100);
-            p2 += pos == 0;
-        }
-    }
-
-    std::cout << "part 2: " << p2 << std::endl;
+    // vec<str> input = File("input.txt").read().split(",");
+    //
+    // vec<Vector2u> ranges;
+    // for (const str& s : input) {
+    //     vec<str> r = s.split("-");
+    //     ranges.push_back({std::size_t(r[0]), std::size_t(r[1])});
+    // }
+    //
+    // std::size_t p1 = 0, p2 = 0;
+    //
+    // for (const auto& [l, r] : ranges) {
+    //     for (std::size_t i = l; i <= r; ++i) {
+    //         std::size_t n = floordiv(str(i).length(), std::size_t(2));
+    //         for (std::size_t seg = n; n >= 0; --seg) {
+    //
+    //             if (!mod(n, seg) &&) }
+    //     }
+    // }
 }
 
 // void longfunc(int x) { std::this_thread::sleep_for(std::chrono::seconds(x)); }
