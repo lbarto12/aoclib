@@ -4,6 +4,7 @@
 #include <iterator>
 #include <memory>
 #include <optional>
+#include <ostream>
 #include <utility>
 #include <vector>
 
@@ -30,6 +31,12 @@ template <typename T, typename Alloc = std::allocator<T>> class vec : public std
     vec operator()(std::optional<std::ptrdiff_t> start = std::nullopt,
                    std::optional<std::ptrdiff_t> stop = std::nullopt, std::ptrdiff_t step = 1) const {
         return slice(*this, start, stop, step);
+    }
+
+    friend std::ostream& operator<<(std::ostream& stream, const vec<T>& v) {
+        stream << "[ ";
+        for (const T& i : v) stream << i << ", ";
+        return stream << "\b\b ]";
     }
 };
 
