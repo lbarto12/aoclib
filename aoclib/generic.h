@@ -1,9 +1,9 @@
 #pragma once
 
+#include "vector/vec.h"
 #include <iterator>
 #include <numeric>
 #include <type_traits>
-#include <vector>
 
 namespace aoc {
 template <typename F, typename Iterable> bool all(F f, const Iterable& iter) {
@@ -34,7 +34,7 @@ template <typename Out = void, typename F, typename Iterable> auto map(F f, cons
     using Result = std::decay_t<std::invoke_result_t<F&, decltype(*std::begin(iter))>>;
     using T = std::conditional_t<std::is_void_v<Out>, Result, Out>;
 
-    std::vector<T> res;
+    vec<T> res;
     if constexpr (requires { std::size(iter); }) res.reserve(std::size(iter));
     for (const auto& x : iter) res.push_back(f(x));
     return res;
@@ -45,7 +45,7 @@ template <typename... Iterables> auto zip(const Iterables&... iters) {
     using T = std::tuple<std::decay_t<decltype(*std::begin(iters))>...>;
 
     const std::size_t n = std::min({static_cast<std::size_t>(std::size(iters))...});
-    std::vector<T> res;
+    vec<T> res;
     res.reserve(n);
 
     auto its = std::tuple{std::begin(iters)...};
@@ -62,7 +62,7 @@ template <typename... Iterables> auto zip(const Iterables&... iters) {
 
 template <typename Range> auto enumerate(const Range& iterable, std::size_t start = 0) {
     using T = std::decay_t<decltype(*std::begin(iterable))>;
-    std::vector<std::pair<int, T>> res;
+    vec<std::pair<int, T>> res;
 
     if constexpr (requires { std::size(iterable); }) res.reserve(std::size(iterable));
 
