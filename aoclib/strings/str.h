@@ -5,9 +5,9 @@
 #include <stdexcept>
 #include <string>
 #include <string_view>
-#include <vector>
 
 #include "../generic.h"
+#include "../vector/vec.h"
 
 namespace aoc {
 
@@ -28,13 +28,13 @@ class str : public std::string {
     str strip() const;
 
     // Split string on whitespace
-    std::vector<str> split() const;
+    vec<str> split() const;
 
     // Split string on delimiter
-    std::vector<str> split(std::string_view sep, int maxsplit = -1) const;
+    vec<str> split(std::string_view sep, int maxsplit = -1) const;
 
     // Split on newlines, os agnostic
-    std::vector<str> splitlines() const;
+    vec<str> splitlines() const;
 
     // join multiple strings into a single string, using *this* string as a delimiter
     template <typename Range> str join(const Range& parts) const;
