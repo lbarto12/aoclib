@@ -2,7 +2,7 @@ CXX = g++
 CXXFLAGS = -Wall -Wextra -std=c++20 -MMD -MP
 TARGET = main
 
-SRCS = $(shell find . -name '*.cpp')
+SRCS = $(shell find . -path ./examples -prune -o -name '*.cpp' -print)
 OBJS = $(SRCS:.cpp=.o)
 DEPS = $(OBJS:.o=.d)
 

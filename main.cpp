@@ -20,11 +20,28 @@ int main() {
         instructions.push_back({ln[0], int(ln(1))});
     }
 
-    for (auto [i, inst] : enumerate(instructions)) {
-        std::cout << i << " " << std::get<char>(inst) << std::endl;
+    int pos = 50;
+    int p1 = 0;
+
+    for (auto& [dir, off] : instructions) {
+        pos = mod(pos + (dir == 'R' ? off : -off), 100);
+        p1 += pos == 0;
     }
 
-    std::cout << sum(vec<int>{1, 2, 3}) << std::endl;
+    std::cout << "part 1: " << p1 << std::endl;
+
+    // part 2
+    pos = 50;
+    int p2 = 0;
+
+    for (auto& [dir, off] : instructions) {
+        for (int i = 0; i < off; ++i) {
+            pos = mod(pos + (dir == 'R' ? 1 : -1), 100);
+            p2 += pos == 0;
+        }
+    }
+
+    std::cout << "part 2: " << p2 << std::endl;
 }
 
 // void longfunc(int x) { std::this_thread::sleep_for(std::chrono::seconds(x)); }

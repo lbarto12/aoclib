@@ -1,0 +1,45 @@
+#include <iostream>
+
+#include "../aoclib/debug.h"
+#include "../aoclib/ds/Matrix.h"
+#include "../aoclib/ds/Vector2.h"
+#include "../aoclib/files/File.h"
+#include "../aoclib/strings/str.h"
+#include "../aoclib/timing.h"
+#include "../aoclib/vector/vec.h"
+
+#include <thread>
+
+using namespace aoc;
+
+int main() {
+    File file = "input.txt";
+    vec<std::tuple<char, int>> instructions;
+    for (const auto& line : file.readlines()) {
+        str ln = line.strip();
+        instructions.push_back({ln[0], int(ln(1))});
+    }
+
+    int pos = 50;
+    int p1 = 0;
+
+    for (auto& [dir, off] : instructions) {
+        pos = mod(pos + (dir == 'R' ? off : -off), 100);
+        p1 += pos == 0;
+    }
+
+    std::cout << "part 1: " << p1 << std::endl;
+
+    // part 2
+    pos = 50;
+    int p2 = 0;
+
+    for (auto& [dir, off] : instructions) {
+        for (int i = 0; i < off; ++i) {
+            pos = mod(pos + (dir == 'R' ? 1 : -1), 100);
+            p2 += pos == 0;
+        }
+    }
+
+    std::cout << "part 2: " << p2 << std::endl;
+}

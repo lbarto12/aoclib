@@ -77,4 +77,17 @@ T sum(const Range& iterable, T start = T{}) {
     return std::accumulate(std::begin(iterable), std::end(iterable), start);
 }
 
+template <typename T> constexpr T mod(T a, T b) {
+    T r = a % b;
+    if (r != 0 && ((r < 0) != (b < 0))) r += b;
+    return r;
+}
+
+// Python's //, which floors instead of truncating
+template <typename T> constexpr T floordiv(T a, T b) {
+    T q = a / b;
+    if ((a % b != 0) && ((a < 0) != (b < 0))) --q;
+    return q;
+}
+
 } // namespace aoc
