@@ -8,6 +8,7 @@
 #include <utility>
 #include <vector>
 
+#include "../debug.h"
 #include "../slice.h"
 
 namespace aoc {
@@ -33,10 +34,15 @@ template <typename T, typename Alloc = std::allocator<T>> class vec : public std
         return slice(*this, start, stop, step);
     }
 
-    friend std::ostream& operator<<(std::ostream& stream, const vec<T>& v) {
-        stream << "[ ";
-        for (const T& i : v) stream << i << ", ";
-        return stream << "\b\b ]";
+    // print like python: [1, 2, 3]
+    friend std::ostream& operator<<(std::ostream& stream, const vec& v) {
+        stream << '[';
+        const char* sep = "";
+        for (const auto& i : v) {
+            stream << std::exchange(sep, ", ");
+            print_one(stream, i);
+        }
+        return stream << ']';
     }
 };
 

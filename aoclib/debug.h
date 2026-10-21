@@ -20,7 +20,7 @@ template <typename T> void print_one(std::ostream& os, const T& x) {
     }
 }
 
-template <typename Range> void printl(const Range& iterable) {
+template <typename Range> void printit(const Range& iterable) {
     std::cout << '[';
     const char* sep = "";
     for (const auto& x : iterable) {
@@ -29,6 +29,13 @@ template <typename Range> void printl(const Range& iterable) {
         sep = ", ";
     }
     std::cout << "]\n";
+}
+
+// Python's print(): prints each arg space separated, followed by a newline
+template <typename... Args> void println(const Args&... args) {
+    [[maybe_unused]] const char* sep = "";
+    ((std::cout << sep, print_one(std::cout, args), sep = " "), ...);
+    std::cout << '\n';
 }
 
 } // namespace aoc
