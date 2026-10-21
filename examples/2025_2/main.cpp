@@ -15,13 +15,10 @@
 using namespace aoc;
 
 int main() {
-    vec<str> input = File("input.txt").read().split(",");
-
-    vec<Vector2u> ranges;
-    for (const str& s : input) {
+    vec<Vector2u> ranges = map(File("input.txt").read().split(","), [](const str& s) -> Vector2u {
         vec<str> r = s.split("-");
-        ranges.push_back({std::size_t(r[0]), std::size_t(r[1])});
-    }
+        return {std::size_t(r[0]), std::size_t(r[1])};
+    });
 
     std::size_t p1 = 0, p2 = 0;
 

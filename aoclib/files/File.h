@@ -47,6 +47,8 @@ struct File {
         f.seekg(0, std::ios::beg);
     }
 
+    ~File() { f.close(); }
+
   private:
     std::fstream f;
 };

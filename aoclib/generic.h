@@ -30,7 +30,7 @@ template <typename Iterable> bool any(const Iterable& iter) {
     return false;
 }
 
-template <typename Out = void, typename F, typename Iterable> auto map(F f, const Iterable& iter) {
+template <typename Out = void, typename F, typename Iterable> auto map(const Iterable& iter, F f) {
     using Result = std::decay_t<std::invoke_result_t<F&, decltype(*std::begin(iter))>>;
     using T = std::conditional_t<std::is_void_v<Out>, Result, Out>;
 
