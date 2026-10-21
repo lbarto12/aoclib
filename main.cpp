@@ -6,6 +6,7 @@
 #include "aoclib/files/File.h"
 #include "aoclib/strings/str.h"
 #include "aoclib/timing.h"
+#include "aoclib/vector/vec.h"
 
 #include <thread>
 
@@ -13,7 +14,7 @@ using namespace aoc;
 
 int main() {
     File file = "input.txt";
-    std::vector<std::tuple<char, int>> instructions;
+    vec<std::tuple<char, int>> instructions;
     for (const auto& line : file.readlines()) {
         str ln = line.strip();
         instructions.push_back({ln[0], int(ln(1))});
@@ -23,7 +24,7 @@ int main() {
         std::cout << i << " " << std::get<char>(inst) << std::endl;
     }
 
-    std::cout << sum(std::vector<int>{1, 2, 3}) << std::endl;
+    std::cout << sum(vec<int>{1, 2, 3}) << std::endl;
 }
 
 // void longfunc(int x) { std::this_thread::sleep_for(std::chrono::seconds(x)); }
