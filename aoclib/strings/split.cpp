@@ -35,4 +35,17 @@ std::vector<str> str::split(std::string_view sep, int maxsplit) const {
     return result;
 }
 
+// Split on new lines, handles \n && \r\n and omits a final, empty line
+std::vector<str> str::splitlines() const {
+    std::vector<str> out;
+    for (std::size_t i = 0; i < size();) {
+        std::size_t j = find('\n', i);
+        if (j == npos) j = size();
+        std::size_t e = (j > i && (*this)[j - 1] == '\r') ? j - 1 : j;
+        out.push_back(substr(i, e - i));
+        i = j + 1;
+    }
+    return out;
+}
+
 } // namespace aoc

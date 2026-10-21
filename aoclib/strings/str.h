@@ -33,6 +33,9 @@ class str : public std::string {
     // Split string on delimiter
     std::vector<str> split(std::string_view sep, int maxsplit = -1) const;
 
+    // Split on newlines, os agnostic
+    std::vector<str> splitlines() const;
+
     // join multiple strings into a single string, using *this* string as a delimiter
     template <typename Range> str join(const Range& parts) const;
 
