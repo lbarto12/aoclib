@@ -33,7 +33,7 @@ int main() {
     for (const str& line : lines) {
         const auto& [first, f_idx] = maxAndLocation(line({}, -1));
         const auto& [second, _] = maxAndLocation(line(f_idx + 1));
-        j1 += int(str(first + second));
+        j1 += std::size_t(first + second);
 
         str constructed;
         std::size_t boundary = 0;
