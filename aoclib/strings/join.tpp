@@ -2,6 +2,10 @@
 
 namespace aoc {
 
+// Join multiple strings into a single `str` object.
+// Uses *this* string as a delimiter
+//  str joined = str(", ").join(std::vector<str>({"1", "2", "3"}));
+//  joined == "1, 2, 3"
 template <typename Range> str str::join(const Range& parts) const {
     str res;
     bool first = true;

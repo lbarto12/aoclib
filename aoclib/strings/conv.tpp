@@ -2,6 +2,8 @@
 
 namespace aoc {
 
+// Convert this string's legible, numeric value to integer type <T>; if possible.
+// Throws invalid_argument if conversion is not possible
 template <typename T = long long> T str::to_int() const {
     str t = strip();
     T v{};

@@ -2,6 +2,7 @@
 
 namespace aoc {
 
+// strip whitespace off both ends of the string
 str str::strip() const {
     const auto start = find_first_not_of(WS);
     if (start == npos) return {};
@@ -9,6 +10,7 @@ str str::strip() const {
     return substr(start, end - start + 1);
 }
 
+// split the string on whitespace
 std::vector<str> str::split() const {
     std::vector<str> result;
     std::size_t i = 0;
@@ -20,6 +22,7 @@ std::vector<str> str::split() const {
     return result;
 }
 
+// split the string on a specific delimiter
 std::vector<str> str::split(std::string_view sep, int maxsplit) const {
     if (sep.empty()) throw std::invalid_argument("empty separator");
     std::vector<str> result;
