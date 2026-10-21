@@ -15,35 +15,33 @@
 using namespace aoc;
 
 int main() {
-    vec<Vector2u> ranges = map(File("input.txt").read().split(","), [](const str& s) -> Vector2u {
-        vec<str> r = s.split("-");
-        return {std::size_t(r[0]), std::size_t(r[1])};
-    });
+    vec<std::tuple<char, int>> instructions =
+        map(File("input.txt").readlines(), [](const str& line) -> std::tuple<char, int> {
+            str ln = line.strip();
+            return {ln[0], int(ln(1))};
+        });
 
-    std::size_t p1 = 0, p2 = 0;
+    int pos = 50;
+    int p1 = 0;
 
-    for (const auto& [l, r] : ranges) {
-        for (std::size_t i = l; i <= r; ++i) {
-            str s = str(i);
-            std::size_t n = s.length();
-            for (std::size_t seg = n / 2; seg > 0; --seg) {
-                if (mod(n, seg)) continue;
-
-                std::unordered_set<str> check;
-                for (std::size_t x = 0; x < n; x += seg) {
-                    check.insert(s(x, x + seg));
-                }
-
-                if (check.size() == 1) {
-                    p1 += i * (seg == n / 2 && !mod(n, std::size_t(2)));
-                    p2 += i;
-                    break;
-                }
-            }
-        }
+    for (auto& [dir, off] : instructions) {
+        pos = mod(pos + (dir == 'R' ? off : -off), 100);
+        p1 += pos == 0;
     }
 
     std::cout << "part 1: " << p1 << std::endl;
+
+    // part 2
+    pos = 50;
+    int p2 = 0;
+
+    for (auto& [dir, off] : instructions) {
+        for (int i = 0; i < off; ++i) {
+            pos = mod(pos + (dir == 'R' ? 1 : -1), 100);
+            p2 += pos == 0;
+        }
+    }
+
     std::cout << "part 2: " << p2 << std::endl;
 }
 

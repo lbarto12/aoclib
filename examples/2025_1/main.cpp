@@ -13,12 +13,11 @@
 using namespace aoc;
 
 int main() {
-    File file = "input.txt";
-    vec<std::tuple<char, int>> instructions;
-    for (const auto& line : file.readlines()) {
-        str ln = line.strip();
-        instructions.push_back({ln[0], int(ln(1))});
-    }
+    vec<std::tuple<char, int>> instructions =
+        map(File("input.txt").readlines(), [](const str& line) -> std::tuple<char, int> {
+            str ln = line.strip();
+            return {ln[0], int(ln(1))};
+        });
 
     int pos = 50;
     int p1 = 0;
