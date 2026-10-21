@@ -3,8 +3,11 @@
 #include <initializer_list>
 #include <iterator>
 #include <memory>
+#include <optional>
 #include <utility>
 #include <vector>
+
+#include "../slice.h"
 
 namespace aoc {
 
@@ -21,6 +24,13 @@ template <typename T, typename Alloc = std::allocator<T>> class vec : public std
 
     vec(std::initializer_list<T> init) : base(init) {}
     template <typename It> vec(It first, It last) : base(first, last) {}
+
+  public: // operators
+    // slice operator, like python: v(1, -1) == v[1:-1], v({}, {}, 2) == v[::2]
+    vec operator()(std::optional<std::ptrdiff_t> start = std::nullopt,
+                   std::optional<std::ptrdiff_t> stop = std::nullopt, std::ptrdiff_t step = 1) const {
+        return slice(*this, start, stop, step);
+    }
 };
 
 } // namespace aoc
