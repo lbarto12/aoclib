@@ -12,7 +12,7 @@ str str::strip() const {
 
 // split the string on whitespace
 vec<str> str::split() const {
-    std::vector<str> result;
+    vec<str> result;
     std::size_t i = 0;
     while ((i = find_first_not_of(WS, i)) != std::string::npos) {
         std::size_t j = find_first_of(WS, i);
@@ -25,7 +25,7 @@ vec<str> str::split() const {
 // split the string on a specific delimiter
 vec<str> str::split(std::string_view sep, int maxsplit) const {
     if (sep.empty()) throw std::invalid_argument("empty separator");
-    std::vector<str> result;
+    vec<str> result;
     std::size_t i = 0;
     for (std::size_t j = 0; maxsplit != 0 && (j = find(sep, i)) != std::string::npos; --maxsplit) {
         result.push_back(substr(i, j - i));
@@ -37,7 +37,7 @@ vec<str> str::split(std::string_view sep, int maxsplit) const {
 
 // Split on new lines, handles \n && \r\n and omits a final, empty line
 vec<str> str::splitlines() const {
-    std::vector<str> out;
+    vec<str> out;
     for (std::size_t i = 0; i < size();) {
         std::size_t j = find('\n', i);
         if (j == npos) j = size();

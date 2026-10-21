@@ -32,8 +32,8 @@ struct File {
         return buffer.str();
     }
 
-    std::vector<str> readlines() {
-        std::vector<str> result;
+    vec<str> readlines() {
+        vec<str> result;
         std::string line;
         while (std::getline(f, line)) {
             result.push_back(line);

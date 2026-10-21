@@ -1,17 +1,18 @@
 #pragma once
 
-#include "../errors.h"
-#include "Vector2.h"
 #include <iostream>
-#include <vector>
+
+#include "../errors.h"
+#include "../vector/vec.h"
+#include "Vector2.h"
 
 namespace aoc {
 
 // Represents a matrix
 // Offers some basic matrix methods
 template <typename T> struct Matrix2D {
-    using Row = std::vector<T>;
-    using Grid = std::vector<Row>;
+    using Row = vec<T>;
+    using Grid = vec<Row>;
 
     Matrix2D() = default;
     Matrix2D(std::initializer_list<Row> init) : mtx(init) {}
@@ -19,9 +20,9 @@ template <typename T> struct Matrix2D {
 
     // Correctness assertions for matricies
     struct Assert {
-        static bool NotEmpty(const std::vector<std::vector<T>>& mtx) { return mtx.size() && mtx[0].size(); }
+        static bool NotEmpty(const vec<vec<T>>& mtx) { return mtx.size() && mtx[0].size(); }
 
-        static bool CanTranspose(const std::vector<std::vector<T>>& mtx) {
+        static bool CanTranspose(const vec<vec<T>>& mtx) {
             const size_t mustbe = mtx[0].size();
             for (const auto& row : mtx) {
                 if (row.size() != mustbe) return false;
@@ -38,7 +39,7 @@ template <typename T> struct Matrix2D {
         if (!Assert::CanTranspose(mtx)) throw InvalidMatrixError("matrix is not transposable");
 
         // create a transposed, empty matrix from the input
-        auto res = std::vector<std::vector<T>>(mtx[0].size(), std::vector<T>(mtx.size(), T{}));
+        auto res = vec<vec<T>>(mtx[0].size(), vec<T>(mtx.size(), T{}));
 
         for (size_t i = 0; i < mtx.size(); ++i) {
             for (size_t j = 0; j < mtx[0].size(); ++j) {
@@ -61,24 +62,24 @@ template <typename T> struct Matrix2D {
     }
 
   public: // iterators
-    std::vector<std::vector<T>>::iterator begin() { return mtx.begin(); }
+    vec<vec<T>>::iterator begin() { return mtx.begin(); }
 
-    std::vector<std::vector<T>>::iterator end() { return mtx.end(); }
+    vec<vec<T>>::iterator end() { return mtx.end(); }
 
-    std::vector<std::vector<T>>::const_iterator begin() const { return mtx.begin(); }
+    vec<vec<T>>::const_iterator begin() const { return mtx.begin(); }
 
-    std::vector<std::vector<T>>::const_iterator end() const { return mtx.end(); }
+    vec<vec<T>>::const_iterator end() const { return mtx.end(); }
 
   public: // accessors
-    std::vector<T>& operator[](size_t index) { return mtx[index]; }
+    vec<T>& operator[](size_t index) { return mtx[index]; }
 
-    const std::vector<T>& operator[](size_t index) const { return mtx[index]; }
+    const vec<T>& operator[](size_t index) const { return mtx[index]; }
 
     T& at(const Vector2i& pos) { return mtx[pos.y][pos.x]; }
     const T& at(const Vector2i& pos) const { return mtx[pos.y][pos.x]; }
 
   private:
-    std::vector<std::vector<T>> mtx;
+    vec<vec<T>> mtx;
 };
 
 } // namespace aoc
