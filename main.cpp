@@ -8,44 +8,49 @@
 #include "aoclib/timing.h"
 #include "aoclib/vector/vec.h"
 
+#include <unordered_set>
+
 using namespace aoc;
 
-std::tuple<str, std::size_t> maxAndLocation(const str& s) {
-    str mx = "-1";
-    int mi = -1;
-
-    for (const auto& [i, c] : enumerate(s)) {
-        if (int(str(c)) > int(mx)) {
-            mx = str(c);
-            mi = i;
+std::tuple<std::size_t, std::unordered_set<Vector2i>> forklift(const vec<vec<char>>& floor) {
+    int w = floor[0].size(), h = floor.size();
+    std::unordered_set<Vector2i> valid;
+    std::size_t result = 0;
+    for (const auto& [y, line] : enumerate(floor)) {
+        for (const auto& [x, c] : enumerate(line)) {
+            std::size_t adj = sum(map(Vector2i(x, y).adjacent8(), [w, h, &floor](const Vector2i& pos) -> int {
+                const auto& [cx, cy] = pos;
+                return int(0 <= cx && cx < w && 0 <= cy && cy < h && floor[cy][cx] == '@');
+            }));
+            if (c == '@' && adj < 4) {
+                ++result;
+                valid.insert({x, y});
+            }
         }
     }
-
-    return {mx, mi};
+    return {result, valid};
 }
 
 int main() {
-    vec<str> lines = File("input.txt").readlines();
+    vec<vec<char>> room =
+        map(File("input.txt").readlines(), [](const str& line) -> vec<char> { return vec<char>(line.strip()); });
 
-    std::size_t j1 = 0, j2 = 0;
+    const auto& [p1, _] = forklift(room);
 
-    for (const str& line : lines) {
-        const auto& [first, f_idx] = maxAndLocation(line({}, -1));
-        const auto& [second, _] = maxAndLocation(line(f_idx + 1));
-        j1 += std::size_t(first + second);
+    std::size_t p2 = 0;
+    while (true) {
+        const auto& [count, remove] = forklift(room);
+        if (remove.empty()) break;
 
-        str constructed;
-        std::size_t boundary = 0;
-        for (int i = -11; i <= 0; ++i) {
-            const auto& [nxt, idx] = maxAndLocation(i ? line(boundary, i) : line(boundary));
-            boundary += idx + 1;
-            constructed += nxt;
+        p2 += count;
+
+        for (const auto& [x, y] : remove) {
+            room[y][x] = '.';
         }
-        j2 += std::size_t(constructed);
     }
 
-    std::cout << "part 1: " << j1 << std::endl;
-    std::cout << "part 2: " << j2 << std::endl;
+    std::cout << "part 1: " << p1 << std::endl;
+    std::cout << "part 2: " << p2 << std::endl;
 }
 
 // void longfunc(int x) { std::this_thread::sleep_for(std::chrono::seconds(x)); }

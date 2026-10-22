@@ -1,10 +1,12 @@
 #pragma once
 
+#include <concepts>
 #include <initializer_list>
 #include <iterator>
 #include <memory>
 #include <optional>
 #include <ostream>
+#include <string>
 #include <utility>
 #include <vector>
 
@@ -26,6 +28,11 @@ template <typename T, typename Alloc = std::allocator<T>> class vec : public std
 
     vec(std::initializer_list<T> init) : base(init) {}
     template <typename It> vec(It first, It last) : base(first, last) {}
+
+    // split a string into its chars: vec<char>(str("abc")) == {'a', 'b', 'c'}
+    explicit vec(const std::string& s)
+        requires std::same_as<T, char>
+        : base(s.begin(), s.end()) {}
 
   public: // operators
     // slice operator, like python: v(1, -1) == v[1:-1], v({}, {}, 2) == v[::2]

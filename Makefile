@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -Wall -Wextra -std=c++20 -MMD -MP
+CXXFLAGS = -Wall -Wextra -std=c++20 -O2 -MMD -MP
 TARGET = main
 
 SRCS = $(shell find . -path ./examples -prune -o -name '*.cpp' -print)
