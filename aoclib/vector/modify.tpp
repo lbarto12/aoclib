@@ -14,6 +14,29 @@ template <typename T, typename Alloc> vec<T, Alloc> vec<T, Alloc>::reversed() co
 }
 
 template <typename T, typename Alloc>
+template <typename Key>
+vec<T, Alloc>& vec<T, Alloc>::sort(Key key, bool reverse)
+    requires std::sortable<typename base::iterator, std::ranges::less, Key>
+{
+    // greater rather than reversing afterwards, so equal elements keep their order like python
+    if (reverse)
+        std::ranges::stable_sort(*this, std::ranges::greater{}, key);
+    else
+        std::ranges::stable_sort(*this, std::ranges::less{}, key);
+    return *this;
+}
+
+template <typename T, typename Alloc>
+template <typename Key>
+vec<T, Alloc> vec<T, Alloc>::sorted(Key key, bool reverse) const
+    requires std::sortable<typename base::iterator, std::ranges::less, Key>
+{
+    vec cpy = *this;
+    cpy.sort(key, reverse);
+    return cpy;
+}
+
+template <typename T, typename Alloc>
 template <typename Iterable>
     requires RangeOf<Iterable, T>
 vec<T, Alloc>& vec<T, Alloc>::extend(const Iterable& iter) {

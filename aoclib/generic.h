@@ -94,6 +94,17 @@ auto enumerate(const Range& iterable, std::ptrdiff_t start = 0) {
     return res;
 }
 
+// python's sorted(): a new, stably sorted vec of any iterable's elements. sorted(s, key), sorted(s, {}, true)
+template <typename Iterable, typename Key = std::identity>
+    requires RangeOf<Iterable, std::ranges::range_value_t<const Iterable>> &&
+             std::sortable<typename vec<std::ranges::range_value_t<const Iterable>>::iterator, std::ranges::less, Key>
+auto sorted(const Iterable& iter, Key key = {}, bool reverse = false) {
+    vec<std::ranges::range_value_t<const Iterable>> res;
+    res.extend(iter);
+    res.sort(key, reverse);
+    return res;
+}
+
 template <typename Range, typename T = std::decay_t<decltype(*std::begin(std::declval<const Range&>()))>>
     requires std::ranges::range<const Range> &&
              requires(T acc, std::ranges::range_reference_t<const Range> x) { acc = acc + x; }

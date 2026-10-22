@@ -1,7 +1,9 @@
 #pragma once
 
 #include <algorithm>
+#include <array>
 #include <concepts>
+#include <functional>
 #include <initializer_list>
 #include <iterator>
 #include <memory>
@@ -10,11 +12,13 @@
 #include <ranges>
 #include <stdexcept>
 #include <string>
+#include <tuple>
 #include <utility>
 #include <vector>
 
 #include "../concepts.h"
 #include "../debug.h"
+#include "../errors.h"
 #include "../index.h"
 #include "../slice.h"
 
@@ -46,6 +50,17 @@ template <typename T, typename Alloc = std::allocator<T>> class vec : public std
     // copy reverse
     vec reversed() const;
 
+    // inline stable sort, like python: v.sort(), v.sort(key), v.sort({}, true) for descending
+    // key maps each element to the value it's compared by: v.sort([](const Vector2u& p) { return p.x; })
+    template <typename Key = std::identity>
+    vec& sort(Key key = {}, bool reverse = false)
+        requires std::sortable<typename base::iterator, std::ranges::less, Key>;
+
+    // copy sort, same arguments as sort
+    template <typename Key = std::identity>
+    vec sorted(Key key = {}, bool reverse = false) const
+        requires std::sortable<typename base::iterator, std::ranges::less, Key>;
+
     // count the number of elements that match `elem`
     std::size_t count(const T& elem) const
         requires std::equality_comparable<T>;
@@ -61,6 +76,17 @@ template <typename T, typename Alloc = std::allocator<T>> class vec : public std
 
     // remove and return the element at `index`, negative indices wrap. v.pop() removes the last element
     T pop(std::ptrdiff_t index = -1);
+
+  public: // unpacking, for structured bindings. throws ValueError if size() doesn't match, like python
+    // all N elements, converted to U: auto [a, b] = s.split("-").unpack<2, std::size_t>();
+    template <std::size_t N, typename U = T>
+        requires std::constructible_from<U, const T&>
+    std::array<U, N> unpack() const;
+
+    // one element per type: auto [name, n] = line.split(" ").unpack<str, int>();
+    template <typename... Us>
+        requires(sizeof...(Us) > 0) && (std::constructible_from<Us, const T&> && ...)
+    std::tuple<Us...> unpack() const;
 
   public: // operators
     // slice operator, like python: v(1, -1) == v[1:-1], v({}, {}, 2) == v[::2]
@@ -91,3 +117,4 @@ template <Printable T, typename Alloc> std::ostream& operator<<(std::ostream& st
 #include "modify.tpp"
 #include "ops.tpp"
 #include "search.tpp"
+#include "unpack.tpp"

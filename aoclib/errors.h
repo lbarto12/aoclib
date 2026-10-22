@@ -19,4 +19,8 @@ struct FileOpenFailedError : public std::runtime_error {
 struct IndexError : public std::out_of_range {
     explicit IndexError(const std::string& what = "Index out of range") : std::out_of_range(what) {}
 };
+
+struct ValueError : public std::invalid_argument {
+    explicit ValueError(const std::string& what = "Invalid value") : std::invalid_argument(what) {}
+};
 } // namespace aoc
