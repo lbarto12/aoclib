@@ -4,6 +4,8 @@
 #include <optional>
 #include <stdexcept>
 
+#include "index.h"
+
 namespace aoc {
 
 /*
@@ -19,20 +21,8 @@ C slice(const C& src, std::optional<std::ptrdiff_t> start, std::optional<std::pt
     if (step == 0) throw std::invalid_argument("slice step cannot be zero");
     const auto len = static_cast<std::ptrdiff_t>(src.size());
 
-    auto adjust = [&](std::optional<std::ptrdiff_t> idx, std::ptrdiff_t fallback) {
-        if (!idx) return fallback;
-        std::ptrdiff_t i = *idx;
-        if (i < 0) {
-            i += len;
-            if (i < 0) i = step < 0 ? -1 : 0;
-        } else if (i >= len) {
-            i = step < 0 ? len - 1 : len;
-        }
-        return i;
-    };
-
-    const std::ptrdiff_t lo = adjust(start, step < 0 ? len - 1 : 0);
-    const std::ptrdiff_t hi = adjust(stop, step < 0 ? -1 : len);
+    const std::ptrdiff_t lo = start ? clamp_index(*start, src.size(), step) : (step < 0 ? len - 1 : 0);
+    const std::ptrdiff_t hi = stop ? clamp_index(*stop, src.size(), step) : (step < 0 ? -1 : len);
 
     std::ptrdiff_t count = 0;
     if (step > 0 && lo < hi)

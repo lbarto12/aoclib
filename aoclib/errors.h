@@ -15,4 +15,8 @@ struct EmptyMatrixError : public std::runtime_error {
 struct FileOpenFailedError : public std::runtime_error {
     explicit FileOpenFailedError(const std::string& what = "File could not be opened") : std::runtime_error(what) {}
 };
+
+struct IndexError : public std::out_of_range {
+    explicit IndexError(const std::string& what = "Index out of range") : std::out_of_range(what) {}
+};
 } // namespace aoc

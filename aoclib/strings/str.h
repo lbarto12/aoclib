@@ -7,6 +7,7 @@
 #include <string_view>
 
 #include "../generic.h"
+#include "../index.h"
 #include "../vector/vec.h"
 
 namespace aoc {
@@ -82,6 +83,10 @@ class str : public std::string {
     // slice operator
     str operator()(std::optional<std::ptrdiff_t> start = std::nullopt,
                    std::optional<std::ptrdiff_t> stop = std::nullopt, std::ptrdiff_t step = 1) const;
+
+    // index operator, like python: negative indices wrap, s[-1] == last char. throws IndexError if out of range
+    char& operator[](std::ptrdiff_t i);
+    const char& operator[](std::ptrdiff_t i) const;
 
     // assign anything std::string can, returning str&
     template <typename T>

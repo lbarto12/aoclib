@@ -14,6 +14,9 @@ template <typename T> str& str::operator+=(T&& x) {
     return *this;
 }
 
+inline char& str::operator[](std::ptrdiff_t i) { return std::string::operator[](wrap_index(i, size())); }
+inline const char& str::operator[](std::ptrdiff_t i) const { return std::string::operator[](wrap_index(i, size())); }
+
 inline str str::substr(size_type pos, size_type n) const { return std::string::substr(pos, n); }
 
 template <typename... Args> str& str::append(Args&&... args) {
