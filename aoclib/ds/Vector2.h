@@ -6,12 +6,14 @@
 #include <ostream>
 #include <vector>
 
+#include "../concepts.h"
+
 namespace aoc {
 
 // Simple definition of a 2 point set.
 // This is good for positions, directions, vectors, etc.
 // Includes operator overloads for basic arithmetic operations (+, -, *, /, %)
-template <typename T> struct Vector2 {
+template <Arithmetic T> struct Vector2 {
     T x{}, y{};
 
     constexpr Vector2() = default;
@@ -128,7 +130,7 @@ using Vector2c = Vector2<char>;
 } // namespace aoc
 
 // define hash for vectors
-template <typename T> struct std::hash<aoc::Vector2<T>> {
+template <aoc::Arithmetic T> struct std::hash<aoc::Vector2<T>> {
     std::size_t operator()(const aoc::Vector2<T>& v) const noexcept {
         std::size_t h1 = std::hash<T>{}(v.x);
         std::size_t h2 = std::hash<T>{}(v.y);

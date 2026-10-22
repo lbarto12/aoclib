@@ -1,16 +1,23 @@
 #pragma once
 
 #include <charconv>
+#include <concepts>
 #include <optional>
+#include <ranges>
 #include <stdexcept>
 #include <string>
 #include <string_view>
 
+#include "../concepts.h"
 #include "../generic.h"
 #include "../index.h"
 #include "../vector/vec.h"
 
 namespace aoc {
+
+// anything that can be concatenated onto a str
+template <typename T>
+concept StrLike = std::convertible_to<const T&, std::string_view> || std::same_as<T, char>;
 
 // std::string wrapper to more easily facilitate some common string methods
 class str : public std::string {
@@ -26,7 +33,7 @@ class str : public std::string {
 
     // cool extras
     template <typename N>
-        requires std::is_arithmetic_v<N> && (!std::same_as<N, char>) && (!std::same_as<N, bool>)
+        requires Arithmetic<N> && (!std::same_as<N, char>) && (!std::same_as<N, bool>)
     explicit str(N n) {
         char buf[64];
         auto [end, ec] = std::to_chars(buf, buf + sizeof buf, n);
@@ -50,7 +57,9 @@ class str : public std::string {
     vec<str> splitlines() const;
 
     // join multiple strings into a single string, using *this* string as a delimiter
-    template <typename Range> str join(const Range& parts) const;
+    template <typename Range>
+        requires std::ranges::range<const Range> && StrLike<std::ranges::range_value_t<const Range>>
+    str join(const Range& parts) const;
 
   public: // properties
     // is the string a valid integer
@@ -71,7 +80,7 @@ class str : public std::string {
   public: // casts
     // covert this string into character-integer representation
     // templated to control resulting int-type
-    template <typename T> T to_int() const;
+    template <Integer T = long long> T to_int() const;
 
     // various int casts, expand to str.to_int<cast_type>();
     inline operator int() const;
@@ -90,27 +99,36 @@ class str : public std::string {
 
     // assign anything std::string can, returning str&
     template <typename T>
-        requires(!std::derived_from<std::remove_cvref_t<T>, str>)
+        requires(!std::derived_from<std::remove_cvref_t<T>, str>) &&
+                requires(std::string& s, T&& x) { s = std::forward<T>(x); }
     str& operator=(T&& x);
 
     // append anything std::string can, returning str&
-    template <typename T> str& operator+=(T&& x);
+    template <typename T>
+        requires requires(std::string& s, T&& x) { s += std::forward<T>(x); }
+    str& operator+=(T&& x);
 
   public: // std::string methods, re-typed to return str instead of std::string
     str substr(size_type pos = 0, size_type n = npos) const;
 
-    template <typename... Args> str& append(Args&&... args);
-    template <typename... Args> str& assign(Args&&... args);
-    template <typename... Args> str& replace(Args&&... args);
+    template <typename... Args>
+        requires requires(std::string& s, Args&&... args) { s.append(std::forward<Args>(args)...); }
+    str& append(Args&&... args);
+    template <typename... Args>
+        requires requires(std::string& s, Args&&... args) { s.assign(std::forward<Args>(args)...); }
+    str& assign(Args&&... args);
+    template <typename... Args>
+        requires requires(std::string& s, Args&&... args) { s.replace(std::forward<Args>(args)...); }
+    str& replace(Args&&... args);
 
     // iterator overloads still return iterators
-    template <typename... Args> decltype(auto) insert(Args&&... args);
-    template <typename... Args> decltype(auto) erase(Args&&... args);
+    template <typename... Args>
+        requires requires(std::string& s, Args&&... args) { s.insert(std::forward<Args>(args)...); }
+    decltype(auto) insert(Args&&... args);
+    template <typename... Args>
+        requires requires(std::string& s, Args&&... args) { s.erase(std::forward<Args>(args)...); }
+    decltype(auto) erase(Args&&... args);
 };
-
-// anything that can be concatenated onto a str
-template <typename T>
-concept StrLike = std::convertible_to<const T&, std::string_view> || std::same_as<T, char>;
 
 // concatenation: str + x, x + str
 template <StrLike T> str operator+(str lhs, const T& rhs);
@@ -119,8 +137,8 @@ template <StrLike T>
 str operator+(const T& lhs, const str& rhs);
 
 // repetition, like python: str("ab") * 3 == "ababab"
-template <std::integral N> str operator*(const str& s, N n);
-template <std::integral N> str operator*(N n, const str& s);
+template <Integer N> str operator*(const str& s, N n);
+template <Integer N> str operator*(N n, const str& s);
 
 } // namespace aoc
 

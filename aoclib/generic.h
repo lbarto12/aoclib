@@ -1,6 +1,9 @@
 #pragma once
 
+#include "concepts.h"
 #include "vector/vec.h"
+#include <concepts>
+#include <functional>
 #include <iterator>
 #include <numeric>
 #include <ranges>
@@ -8,7 +11,7 @@
 
 namespace aoc {
 template <typename F, typename Iterable>
-    requires std::ranges::range<const Iterable>
+    requires std::ranges::range<const Iterable> && std::predicate<F&, std::ranges::range_reference_t<const Iterable>>
 bool all(F f, const Iterable& iter) {
     for (const auto& i : iter)
         if (!f(i)) return false;
@@ -16,7 +19,8 @@ bool all(F f, const Iterable& iter) {
 }
 
 template <typename Iterable>
-    requires std::ranges::range<const Iterable>
+    requires std::ranges::range<const Iterable> &&
+             std::constructible_from<bool, std::ranges::range_reference_t<const Iterable>>
 bool all(const Iterable& iter) {
     for (const auto& i : iter)
         if (!i) return false;
@@ -24,7 +28,7 @@ bool all(const Iterable& iter) {
 }
 
 template <typename F, typename Iterable>
-    requires std::ranges::range<const Iterable>
+    requires std::ranges::range<const Iterable> && std::predicate<F&, std::ranges::range_reference_t<const Iterable>>
 bool any(F f, const Iterable& iter) {
     for (const auto& i : iter)
         if (f(i)) return true;
@@ -32,7 +36,8 @@ bool any(F f, const Iterable& iter) {
 }
 
 template <typename Iterable>
-    requires std::ranges::range<const Iterable>
+    requires std::ranges::range<const Iterable> &&
+             std::constructible_from<bool, std::ranges::range_reference_t<const Iterable>>
 bool any(const Iterable& iter) {
     for (const auto& i : iter)
         if (i) return true;
@@ -40,13 +45,15 @@ bool any(const Iterable& iter) {
 }
 
 template <typename Out = void, typename F, typename Iterable>
-    requires std::ranges::range<const Iterable>
+    requires std::ranges::range<const Iterable> && std::invocable<F&, std::ranges::range_reference_t<const Iterable>> &&
+             (std::is_void_v<Out> ||
+              std::convertible_to<std::invoke_result_t<F&, std::ranges::range_reference_t<const Iterable>>, Out>)
 auto map(const Iterable& iter, F f) {
     using Result = std::decay_t<std::invoke_result_t<F&, decltype(*std::begin(iter))>>;
     using T = std::conditional_t<std::is_void_v<Out>, Result, Out>;
 
     vec<T> res;
-    if constexpr (requires { std::size(iter); }) res.reserve(std::size(iter));
+    if constexpr (std::ranges::sized_range<const Iterable>) res.reserve(std::size(iter));
     for (const auto& x : iter) res.push_back(f(x));
     return res;
 }
@@ -79,7 +86,7 @@ auto enumerate(const Range& iterable, std::ptrdiff_t start = 0) {
     using T = std::decay_t<decltype(*std::begin(iterable))>;
     vec<std::pair<std::ptrdiff_t, T>> res;
 
-    if constexpr (requires { std::size(iterable); }) res.reserve(std::size(iterable));
+    if constexpr (std::ranges::sized_range<const Range>) res.reserve(std::size(iterable));
 
     for (const auto& v : iterable) {
         res.emplace_back(start++, v);
@@ -88,19 +95,20 @@ auto enumerate(const Range& iterable, std::ptrdiff_t start = 0) {
 }
 
 template <typename Range, typename T = std::decay_t<decltype(*std::begin(std::declval<const Range&>()))>>
-    requires std::ranges::range<const Range>
+    requires std::ranges::range<const Range> &&
+             requires(T acc, std::ranges::range_reference_t<const Range> x) { acc = acc + x; }
 T sum(const Range& iterable, T start = T{}) {
     return std::accumulate(std::begin(iterable), std::end(iterable), start);
 }
 
-template <typename T> constexpr T mod(T a, T b) {
+template <std::integral T> constexpr T mod(T a, T b) {
     T r = a % b;
     if (r != 0 && ((r < 0) != (b < 0))) r += b;
     return r;
 }
 
 // Python's //, which floors instead of truncating
-template <typename T> constexpr T floordiv(T a, T b) {
+template <std::integral T> constexpr T floordiv(T a, T b) {
     T q = a / b;
     if ((a % b != 0) && ((a < 0) != (b < 0))) --q;
     return q;

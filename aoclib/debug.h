@@ -1,12 +1,15 @@
 #pragma once
 
 #include <iostream>
+#include <ranges>
 #include <tuple>
+
+#include "concepts.h"
 
 namespace aoc {
 
-template <typename T> void print_one(std::ostream& os, const T& x) {
-    if constexpr (requires { std::tuple_size<T>::value; }) { // tuple, pair, array
+template <Printable T> void print_one(std::ostream& os, const T& x) {
+    if constexpr (TupleLike<T>) { // tuple, pair, array
         os << '(';
         std::apply(
             [&](const auto&... xs) {
@@ -20,7 +23,9 @@ template <typename T> void print_one(std::ostream& os, const T& x) {
     }
 }
 
-template <typename Range> void printit(const Range& iterable) {
+template <typename Range>
+    requires std::ranges::range<const Range> && Printable<std::ranges::range_value_t<const Range>>
+void printit(const Range& iterable) {
     std::cout << '[';
     const char* sep = "";
     for (const auto& x : iterable) {
@@ -32,7 +37,9 @@ template <typename Range> void printit(const Range& iterable) {
 }
 
 // Python's print(): prints each arg space separated, followed by a newline
-template <typename... Args> void println(const Args&... args) {
+template <typename... Args>
+    requires(Printable<Args> && ...)
+void println(const Args&... args) {
     [[maybe_unused]] const char* sep = "";
     ((std::cout << sep, print_one(std::cout, args), sep = " "), ...);
     std::cout << '\n';

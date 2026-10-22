@@ -13,6 +13,7 @@
 #include <utility>
 #include <vector>
 
+#include "../concepts.h"
 #include "../debug.h"
 #include "../index.h"
 #include "../slice.h"
@@ -31,7 +32,7 @@ template <typename T, typename Alloc = std::allocator<T>> class vec : public std
     vec(base&& v) noexcept : base(std::move(v)) {}
 
     vec(std::initializer_list<T> init) : base(init) {}
-    template <typename It> vec(It first, It last) : base(first, last) {}
+    template <std::input_iterator It> vec(It first, It last) : base(first, last) {}
 
     // split a string into its chars: vec<char>(str("abc")) == {'a', 'b', 'c'}
     explicit vec(const std::string& s)
@@ -46,15 +47,17 @@ template <typename T, typename Alloc = std::allocator<T>> class vec : public std
     vec reversed() const;
 
     // count the number of elements that match `elem`
-    std::size_t count(const T& elem) const;
+    std::size_t count(const T& elem) const
+        requires std::equality_comparable<T>;
 
     // add iterable's elements to this one
     template <typename Iterable>
-        requires std::ranges::range<Iterable>
+        requires RangeOf<Iterable, T>
     vec& extend(const Iterable& iter);
 
     // get the index of an element, throws if not in array
-    std::size_t index(const T& elem) const;
+    std::size_t index(const T& elem) const
+        requires std::equality_comparable<T>;
 
     // remove and return the element at `index`, negative indices wrap. v.pop() removes the last element
     T pop(std::ptrdiff_t index = -1);
@@ -70,17 +73,17 @@ template <typename T, typename Alloc = std::allocator<T>> class vec : public std
 
     // python append
     template <typename Iterable>
-        requires std::ranges::range<Iterable>
+        requires RangeOf<Iterable, T>
     vec& operator+=(const Iterable& iter);
 
     // python concatenation, returns a new vec
     template <typename Iterable>
-        requires std::ranges::range<Iterable>
+        requires RangeOf<Iterable, T>
     vec operator+(const Iterable& iter) const;
 };
 
 // print like python: [1, 2, 3]
-template <typename T, typename Alloc> std::ostream& operator<<(std::ostream& stream, const vec<T, Alloc>& v);
+template <Printable T, typename Alloc> std::ostream& operator<<(std::ostream& stream, const vec<T, Alloc>& v);
 
 } // namespace aoc
 

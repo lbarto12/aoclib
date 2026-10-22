@@ -1,5 +1,6 @@
 #pragma once
 
+#include <concepts>
 #include <cstddef>
 #include <optional>
 #include <stdexcept>
@@ -16,7 +17,15 @@ namespace aoc {
  *  slice(c, 1, -1)     -> c[1:-1]
  *  slice(c, {}, {}, 2) -> c[::2]
  * */
+// a container that can be sliced: sized, indexable, and buildable element by element
 template <typename C>
+concept Sliceable = std::default_initializable<C> && requires(const C& src, C& out, std::size_t i) {
+    { src.size() } -> std::convertible_to<std::size_t>;
+    out.reserve(i);
+    out.push_back(src[i]);
+};
+
+template <Sliceable C>
 C slice(const C& src, std::optional<std::ptrdiff_t> start, std::optional<std::ptrdiff_t> stop, std::ptrdiff_t step) {
     if (step == 0) throw std::invalid_argument("slice step cannot be zero");
     const auto len = static_cast<std::ptrdiff_t>(src.size());

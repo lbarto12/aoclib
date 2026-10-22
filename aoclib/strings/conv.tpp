@@ -4,7 +4,7 @@ namespace aoc {
 
 // Convert this string's legible, numeric value to integer type <T>; if possible.
 // Throws invalid_argument if conversion is not possible
-template <typename T = long long> T str::to_int() const {
+template <Integer T> T str::to_int() const {
     str t = strip();
     T v{};
     auto [p, ec] = std::from_chars(t.data(), t.data() + t.size(), v);

@@ -1,7 +1,9 @@
 #pragma once
 
+#include <concepts>
 #include <iostream>
 
+#include "../concepts.h"
 #include "../errors.h"
 #include "../vector/vec.h"
 #include "Vector2.h"
@@ -34,7 +36,9 @@ template <typename T> struct Matrix2D {
     // transposes a matrix.
     // in this particular function, for vectors.
     // asserts the correctness of the vector
-    Matrix2D<T> transpose() const {
+    Matrix2D<T> transpose() const
+        requires std::default_initializable<T> && std::copyable<T>
+    {
         if (!Assert::NotEmpty(mtx)) throw EmptyMatrixError();
         if (!Assert::CanTranspose(mtx)) throw InvalidMatrixError("matrix is not transposable");
 
@@ -50,7 +54,9 @@ template <typename T> struct Matrix2D {
     }
 
     // Allows use of std::cout << matrix << std::endl;
-    friend std::ostream& operator<<(std::ostream& s, const Matrix2D<T>& matrix) {
+    friend std::ostream& operator<<(std::ostream& s, const Matrix2D<T>& matrix)
+        requires Streamable<T>
+    {
 
         for (const auto& row : matrix.mtx) {
             s << "| ";

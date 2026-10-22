@@ -1,13 +1,18 @@
 #pragma once
 
+#include <concepts>
 #include <cstddef>
 #include <initializer_list>
 #include <unordered_map>
 #include <utility>
 
+#include "../concepts.h"
+
 namespace aoc {
 
-template <typename T> struct DisjointSetUnion {
+template <typename T>
+    requires Hashable<T> && std::copyable<T>
+struct DisjointSetUnion {
     DisjointSetUnion() = default;
 
     DisjointSetUnion(std::initializer_list<T> init) {

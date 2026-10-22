@@ -8,8 +8,7 @@ vec<T, Alloc> vec<T, Alloc>::operator()(std::optional<std::ptrdiff_t> start, std
     return slice(*this, start, stop, step);
 }
 
-template <typename T, typename Alloc>
-auto vec<T, Alloc>::operator[](std::ptrdiff_t i) -> typename base::reference {
+template <typename T, typename Alloc> auto vec<T, Alloc>::operator[](std::ptrdiff_t i) -> typename base::reference {
     return base::operator[](wrap_index(i, this->size()));
 }
 
@@ -20,21 +19,21 @@ auto vec<T, Alloc>::operator[](std::ptrdiff_t i) const -> typename base::const_r
 
 template <typename T, typename Alloc>
 template <typename Iterable>
-    requires std::ranges::range<Iterable>
+    requires RangeOf<Iterable, T>
 vec<T, Alloc>& vec<T, Alloc>::operator+=(const Iterable& iter) {
     return extend(iter);
 }
 
 template <typename T, typename Alloc>
 template <typename Iterable>
-    requires std::ranges::range<Iterable>
+    requires RangeOf<Iterable, T>
 vec<T, Alloc> vec<T, Alloc>::operator+(const Iterable& iter) const {
     vec cpy = *this;
     cpy.extend(iter);
     return cpy;
 }
 
-template <typename T, typename Alloc> std::ostream& operator<<(std::ostream& stream, const vec<T, Alloc>& v) {
+template <Printable T, typename Alloc> std::ostream& operator<<(std::ostream& stream, const vec<T, Alloc>& v) {
     stream << '[';
     const char* sep = "";
     for (const auto& i : v) {

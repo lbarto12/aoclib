@@ -3,13 +3,16 @@
 namespace aoc {
 
 template <typename T>
-    requires(!std::derived_from<std::remove_cvref_t<T>, str>)
+    requires(!std::derived_from<std::remove_cvref_t<T>, str>) &&
+            requires(std::string& s, T&& x) { s = std::forward<T>(x); }
 str& str::operator=(T&& x) {
     std::string::operator=(std::forward<T>(x));
     return *this;
 }
 
-template <typename T> str& str::operator+=(T&& x) {
+template <typename T>
+    requires requires(std::string& s, T&& x) { s += std::forward<T>(x); }
+str& str::operator+=(T&& x) {
     std::string::operator+=(std::forward<T>(x));
     return *this;
 }
@@ -19,22 +22,30 @@ inline const char& str::operator[](std::ptrdiff_t i) const { return std::string:
 
 inline str str::substr(size_type pos, size_type n) const { return std::string::substr(pos, n); }
 
-template <typename... Args> str& str::append(Args&&... args) {
+template <typename... Args>
+    requires requires(std::string& s, Args&&... args) { s.append(std::forward<Args>(args)...); }
+str& str::append(Args&&... args) {
     std::string::append(std::forward<Args>(args)...);
     return *this;
 }
 
-template <typename... Args> str& str::assign(Args&&... args) {
+template <typename... Args>
+    requires requires(std::string& s, Args&&... args) { s.assign(std::forward<Args>(args)...); }
+str& str::assign(Args&&... args) {
     std::string::assign(std::forward<Args>(args)...);
     return *this;
 }
 
-template <typename... Args> str& str::replace(Args&&... args) {
+template <typename... Args>
+    requires requires(std::string& s, Args&&... args) { s.replace(std::forward<Args>(args)...); }
+str& str::replace(Args&&... args) {
     std::string::replace(std::forward<Args>(args)...);
     return *this;
 }
 
-template <typename... Args> decltype(auto) str::insert(Args&&... args) {
+template <typename... Args>
+    requires requires(std::string& s, Args&&... args) { s.insert(std::forward<Args>(args)...); }
+decltype(auto) str::insert(Args&&... args) {
     using R = decltype(std::string::insert(std::forward<Args>(args)...));
     if constexpr (std::is_same_v<R, std::string&>) {
         std::string::insert(std::forward<Args>(args)...);
@@ -44,7 +55,9 @@ template <typename... Args> decltype(auto) str::insert(Args&&... args) {
     }
 }
 
-template <typename... Args> decltype(auto) str::erase(Args&&... args) {
+template <typename... Args>
+    requires requires(std::string& s, Args&&... args) { s.erase(std::forward<Args>(args)...); }
+decltype(auto) str::erase(Args&&... args) {
     using R = decltype(std::string::erase(std::forward<Args>(args)...));
     if constexpr (std::is_same_v<R, std::string&>) {
         std::string::erase(std::forward<Args>(args)...);
@@ -70,7 +83,7 @@ str operator+(const T& lhs, const str& rhs) {
 }
 
 // str * n
-template <std::integral N> str operator*(const str& s, N n) {
+template <Integer N> str operator*(const str& s, N n) {
     str out;
     if (n <= 0) return out;
     out.reserve(s.size() * static_cast<std::size_t>(n));
@@ -79,6 +92,6 @@ template <std::integral N> str operator*(const str& s, N n) {
 }
 
 // n * str
-template <std::integral N> str operator*(N n, const str& s) { return s * n; }
+template <Integer N> str operator*(N n, const str& s) { return s * n; }
 
 } // namespace aoc

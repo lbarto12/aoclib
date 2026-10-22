@@ -15,13 +15,13 @@ template <typename T, typename Alloc> vec<T, Alloc> vec<T, Alloc>::reversed() co
 
 template <typename T, typename Alloc>
 template <typename Iterable>
-    requires std::ranges::range<Iterable>
+    requires RangeOf<Iterable, T>
 vec<T, Alloc>& vec<T, Alloc>::extend(const Iterable& iter) {
     // v.extend(v): appending would invalidate the iterators we're reading from, so extend from a copy
     if constexpr (std::derived_from<Iterable, base>) {
         if (static_cast<const base*>(&iter) == static_cast<const base*>(this)) return extend(base(iter));
     }
-    if constexpr (requires { std::size(iter); }) this->reserve(this->size() + std::size(iter));
+    if constexpr (std::ranges::sized_range<const Iterable>) this->reserve(this->size() + std::size(iter));
     for (const auto& i : iter) this->emplace_back(i);
     return *this;
 }
