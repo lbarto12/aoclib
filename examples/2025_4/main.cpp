@@ -25,7 +25,7 @@ std::tuple<std::size_t, std::unordered_set<Vector2i>> forklift(const vec<vec<cha
             }));
             if (c == '@' && adj < 4) {
                 ++result;
-                valid.insert({x, y});
+                valid.insert({int(x), int(y)});
             }
         }
     }

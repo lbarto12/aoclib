@@ -3,34 +3,45 @@
 #include "vector/vec.h"
 #include <iterator>
 #include <numeric>
+#include <ranges>
 #include <type_traits>
 
 namespace aoc {
-template <typename F, typename Iterable> bool all(F f, const Iterable& iter) {
+template <typename F, typename Iterable>
+    requires std::ranges::range<const Iterable>
+bool all(F f, const Iterable& iter) {
     for (const auto& i : iter)
         if (!f(i)) return false;
     return true;
 }
 
-template <typename Iterable> bool all(const Iterable& iter) {
+template <typename Iterable>
+    requires std::ranges::range<const Iterable>
+bool all(const Iterable& iter) {
     for (const auto& i : iter)
         if (!i) return false;
     return true;
 }
 
-template <typename F, typename Iterable> bool any(F f, const Iterable& iter) {
+template <typename F, typename Iterable>
+    requires std::ranges::range<const Iterable>
+bool any(F f, const Iterable& iter) {
     for (const auto& i : iter)
         if (f(i)) return true;
     return false;
 }
 
-template <typename Iterable> bool any(const Iterable& iter) {
+template <typename Iterable>
+    requires std::ranges::range<const Iterable>
+bool any(const Iterable& iter) {
     for (const auto& i : iter)
         if (i) return true;
     return false;
 }
 
-template <typename Out = void, typename F, typename Iterable> auto map(const Iterable& iter, F f) {
+template <typename Out = void, typename F, typename Iterable>
+    requires std::ranges::range<const Iterable>
+auto map(const Iterable& iter, F f) {
     using Result = std::decay_t<std::invoke_result_t<F&, decltype(*std::begin(iter))>>;
     using T = std::conditional_t<std::is_void_v<Out>, Result, Out>;
 
@@ -40,7 +51,9 @@ template <typename Out = void, typename F, typename Iterable> auto map(const Ite
     return res;
 }
 
-template <typename... Iterables> auto zip(const Iterables&... iters) {
+template <typename... Iterables>
+    requires(std::ranges::range<const Iterables> && ...)
+auto zip(const Iterables&... iters) {
     static_assert(sizeof...(Iterables) > 0, "zip needs at least one iterable");
     using T = std::tuple<std::decay_t<decltype(*std::begin(iters))>...>;
 
@@ -60,9 +73,11 @@ template <typename... Iterables> auto zip(const Iterables&... iters) {
     return res;
 }
 
-template <typename Range> auto enumerate(const Range& iterable, std::size_t start = 0) {
+template <typename Range>
+    requires std::ranges::range<const Range>
+auto enumerate(const Range& iterable, std::ptrdiff_t start = 0) {
     using T = std::decay_t<decltype(*std::begin(iterable))>;
-    vec<std::pair<int, T>> res;
+    vec<std::pair<std::ptrdiff_t, T>> res;
 
     if constexpr (requires { std::size(iterable); }) res.reserve(std::size(iterable));
 
@@ -73,6 +88,7 @@ template <typename Range> auto enumerate(const Range& iterable, std::size_t star
 }
 
 template <typename Range, typename T = std::decay_t<decltype(*std::begin(std::declval<const Range&>()))>>
+    requires std::ranges::range<const Range>
 T sum(const Range& iterable, T start = T{}) {
     return std::accumulate(std::begin(iterable), std::end(iterable), start);
 }
