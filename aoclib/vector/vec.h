@@ -7,6 +7,8 @@
 #include <memory>
 #include <optional>
 #include <ostream>
+#include <ranges>
+#include <stdexcept>
 #include <string>
 #include <utility>
 #include <vector>
@@ -38,96 +40,51 @@ template <typename T, typename Alloc = std::allocator<T>> class vec : public std
 
   public: // methods
     // inline reverse
-    vec& reverse() {
-        std::reverse(this->begin(), this->end());
-        return *this;
-    }
+    vec& reverse();
 
     // copy reverse
-    vec reversed() const {
-        vec cpy = *this;
-        cpy.reverse();
-        return cpy;
-    }
+    vec reversed() const;
 
     // count the number of elements that match `elem`
-    std::size_t count(const T& elem) const {
-        std::size_t i = 0;
-        for (const T& e : *this) {
-            if (e == elem) ++i;
-        }
-        return i;
-    }
+    std::size_t count(const T& elem) const;
 
     // add iterable's elements to this one
     template <typename Iterable>
         requires std::ranges::range<Iterable>
-    vec& extend(const Iterable& iter) {
-        // v.extend(v): appending would invalidate the iterators we're reading from, so extend from a copy
-        if constexpr (std::derived_from<Iterable, base>) {
-            if (static_cast<const base*>(&iter) == static_cast<const base*>(this)) return extend(base(iter));
-        }
-        if constexpr (requires { std::size(iter); }) this->reserve(this->size() + std::size(iter));
-        for (const auto& i : iter) this->emplace_back(i);
-        return *this;
-    }
+    vec& extend(const Iterable& iter);
 
     // get the index of an element, throws if not in array
-    std::size_t index(const T& elem) const {
-        for (std::size_t i = 0; i < this->size(); ++i) {
-            if ((*this)[i] == elem) return i;
-        }
-        throw std::invalid_argument("element was not found");
-    }
+    std::size_t index(const T& elem) const;
 
     // remove and return the element at `index`, negative indices wrap. v.pop() removes the last element
-    T pop(std::ptrdiff_t index = -1) {
-        if (this->empty()) throw IndexError("pop from empty vec");
-        const std::size_t i = wrap_index(index, this->size());
-        T out = std::move(base::operator[](i));
-        this->erase(this->begin() + static_cast<std::ptrdiff_t>(i));
-        return out;
-    }
+    T pop(std::ptrdiff_t index = -1);
 
   public: // operators
     // slice operator, like python: v(1, -1) == v[1:-1], v({}, {}, 2) == v[::2]
     vec operator()(std::optional<std::ptrdiff_t> start = std::nullopt,
-                   std::optional<std::ptrdiff_t> stop = std::nullopt, std::ptrdiff_t step = 1) const {
-        return slice(*this, start, stop, step);
-    }
+                   std::optional<std::ptrdiff_t> stop = std::nullopt, std::ptrdiff_t step = 1) const;
 
     // index operator, like python: negative indices wrap, v[-1] == last element. throws IndexError if out of range
-    typename base::reference operator[](std::ptrdiff_t i) { return base::operator[](wrap_index(i, this->size())); }
-    typename base::const_reference operator[](std::ptrdiff_t i) const {
-        return base::operator[](wrap_index(i, this->size()));
-    }
+    typename base::reference operator[](std::ptrdiff_t i);
+    typename base::const_reference operator[](std::ptrdiff_t i) const;
 
     // python append
     template <typename Iterable>
         requires std::ranges::range<Iterable>
-    vec& operator+=(const Iterable& iter) {
-        this->extend(iter);
-        return *this;
-    }
+    vec& operator+=(const Iterable& iter);
 
+    // python concatenation, returns a new vec
     template <typename Iterable>
         requires std::ranges::range<Iterable>
-    vec operator+(const Iterable& iter) {
-        vec cpy = *this;
-        cpy.extend(iter);
-        return cpy;
-    }
-
-    // print like python: [1, 2, 3]
-    friend std::ostream& operator<<(std::ostream& stream, const vec& v) {
-        stream << '[';
-        const char* sep = "";
-        for (const auto& i : v) {
-            stream << std::exchange(sep, ", ");
-            print_one(stream, i);
-        }
-        return stream << ']';
-    }
+    vec operator+(const Iterable& iter) const;
 };
 
+// print like python: [1, 2, 3]
+template <typename T, typename Alloc> std::ostream& operator<<(std::ostream& stream, const vec<T, Alloc>& v);
+
 } // namespace aoc
+
+// templated includes
+#include "modify.tpp"
+#include "ops.tpp"
+#include "search.tpp"
