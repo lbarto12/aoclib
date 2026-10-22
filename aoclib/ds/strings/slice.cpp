@@ -1,5 +1,5 @@
+#include "../../slice.h"
 #include "str.h"
-#include "../slice.h"
 
 namespace aoc {
 

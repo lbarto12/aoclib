@@ -16,11 +16,11 @@
 #include <utility>
 #include <vector>
 
-#include "../concepts.h"
-#include "../debug.h"
-#include "../errors.h"
-#include "../index.h"
-#include "../slice.h"
+#include "../../concepts.h"
+#include "../../debug.h"
+#include "../../errors.h"
+#include "../../index.h"
+#include "../../slice.h"
 
 namespace aoc {
 

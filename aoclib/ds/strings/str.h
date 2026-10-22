@@ -8,9 +8,9 @@
 #include <string>
 #include <string_view>
 
-#include "../concepts.h"
-#include "../generic.h"
-#include "../index.h"
+#include "../../concepts.h"
+#include "../../generic.h"
+#include "../../index.h"
 #include "../vector/vec.h"
 
 namespace aoc {

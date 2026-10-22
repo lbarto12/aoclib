@@ -3,10 +3,10 @@
 #include "aoclib/debug.h"
 #include "aoclib/ds/Matrix.h"
 #include "aoclib/ds/Vector2.h"
+#include "aoclib/ds/strings/str.h"
+#include "aoclib/ds/vector/vec.h"
 #include "aoclib/files/File.h"
-#include "aoclib/strings/str.h"
 #include "aoclib/timing.h"
-#include "aoclib/vector/vec.h"
 
 #include <unordered_set>
 

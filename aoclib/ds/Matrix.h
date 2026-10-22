@@ -5,8 +5,8 @@
 
 #include "../concepts.h"
 #include "../errors.h"
-#include "../vector/vec.h"
 #include "Vector2.h"
+#include "vector/vec.h"
 
 namespace aoc {
 
