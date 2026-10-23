@@ -9,15 +9,32 @@
 #include "aoclib/regex/regex.h"
 #include "aoclib/timing.h"
 
+#include <stack>
 #include <unordered_set>
 
 using namespace aoc;
 
-int main() {
-    str chem = "NaCl";
-    vec<str> c = regex("[A-Z][a-z]*").findall(chem);
+std::size_t eval(const str& eq) {
+    std::stack<str> stk;
 
-    std::cout << c << std::endl;
+    for (const char& chr : eq) {
+        const str c = str(chr);
+        if (c.isdigit()) {}
+    }
+}
+
+int main() {
+    vec<str> read = File("input.txt").readlines();
+    vec<vec<str>> lines = map(read, [](const str& s) -> vec<str> { return s.split(); });
+
+    vec<vec<str>> eqs = transpose(lines({}, -1));
+    vec<str> ops = lines[-1];
+
+    std::size_t p1 = 0;
+    for (const auto& [i, eq] : enumerate(eqs)) {
+        const str e = ops[i].join(eq).replace(" ", "");
+        println(e);
+    }
 }
 
 // void longfunc(int x) { std::this_thread::sleep_for(std::chrono::seconds(x)); }

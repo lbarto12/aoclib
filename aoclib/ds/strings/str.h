@@ -61,6 +61,12 @@ class str : public std::string {
         requires std::ranges::range<const Range> && StrLike<std::ranges::range_value_t<const Range>>
     str join(const Range& parts) const;
 
+    // python's replace: a copy with occurrences of `from` replaced by `to`, the first `count` only if count >= 0
+    //  str("a-b-c").replace("-", "+")    == "a+b+c"
+    //  str("a-b-c").replace("-", "", 1)  == "ab-c"
+    // the positional std::string forms, s.replace(pos, len, "x"), still edit in place
+    str replace(std::string_view from, std::string_view to, int count = -1) const;
+
   public: // properties
     // is the string a valid integer
     bool isdigit() const;
