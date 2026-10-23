@@ -5,6 +5,7 @@
 
 #include "../concepts.h"
 #include "../errors.h"
+#include "../generic.h"
 #include "Vector2.h"
 #include "vector/vec.h"
 
@@ -33,24 +34,13 @@ template <typename T> struct Matrix2D {
         }
     };
 
-    // transposes a matrix.
-    // in this particular function, for vectors.
-    // asserts the correctness of the vector
+    // transposes a matrix. rows may be ragged, see aoc::transpose
+    // throws if the matrix is empty
     Matrix2D<T> transpose() const
-        requires std::default_initializable<T> && std::copyable<T>
+        requires std::copyable<T>
     {
         if (!Assert::NotEmpty(mtx)) throw EmptyMatrixError();
-        if (!Assert::CanTranspose(mtx)) throw InvalidMatrixError("matrix is not transposable");
-
-        // create a transposed, empty matrix from the input
-        auto res = vec<vec<T>>(mtx[0].size(), vec<T>(mtx.size(), T{}));
-
-        for (size_t i = 0; i < mtx.size(); ++i) {
-            for (size_t j = 0; j < mtx[0].size(); ++j) {
-                res[j][i] = mtx[i][j];
-            }
-        }
-        return Matrix2D<T>(res);
+        return Matrix2D<T>(aoc::transpose(mtx));
     }
 
     // Allows use of std::cout << matrix << std::endl;

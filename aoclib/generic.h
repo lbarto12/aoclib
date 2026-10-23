@@ -105,6 +105,29 @@ auto sorted(const Iterable& iter, Key key = {}, bool reverse = false) {
     return res;
 }
 
+// swap rows and columns. rows may be ragged: column j holds element j of every row long enough to have one
+//  transpose(vec<vec<int>>{{1, 2, 3}, {4}}) == {{1, 4}, {2}, {3}}
+// columns keep the input's row type where possible, so transposing a vec<str> gives a vec<str>
+template <typename Rows>
+    requires std::ranges::range<const Rows> && std::ranges::range<const std::ranges::range_value_t<const Rows>> &&
+             std::copyable<std::ranges::range_value_t<const std::ranges::range_value_t<const Rows>>>
+auto transpose(const Rows& rows) {
+    using Row = std::ranges::range_value_t<const Rows>;
+    using T = std::ranges::range_value_t<const Row>;
+    constexpr bool keep_row_type = std::default_initializable<Row> && requires(Row r, const T& x) { r.push_back(x); };
+    using Col = std::conditional_t<keep_row_type, Row, vec<T>>;
+
+    vec<Col> res;
+    for (const auto& row : rows) {
+        std::size_t j = 0;
+        for (const auto& x : row) {
+            if (j == res.size()) res.emplace_back();
+            res[j++].push_back(x);
+        }
+    }
+    return res;
+}
+
 template <typename Range, typename T = std::decay_t<decltype(*std::begin(std::declval<const Range&>()))>>
     requires std::ranges::range<const Range> &&
              requires(T acc, std::ranges::range_reference_t<const Range> x) { acc = acc + x; }
