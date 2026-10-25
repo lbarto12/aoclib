@@ -9,45 +9,22 @@
 #include "../errors.h"
 
 namespace aoc {
-struct File {
+class File {
+  public: // b5
     File() = delete;
-    File(const std::string& filepath, std::ios::openmode mode = std::ios::in | std::ios::out) {
-        f = std::fstream(filepath, mode);
-        if (!f.is_open()) {
-            throw FileOpenFailedError();
-        }
-    }
+    File(const std::string& filepath, std::ios::openmode mode = std::ios::in | std::ios::out);
+    File(const char* filepath);
 
-    File(const char* filepath) {
-        f = std::fstream(filepath);
-        if (!f.is_open()) {
-            throw FileOpenFailedError();
-        }
-    }
+    // read all as string
+    str read();
 
-    str read() {
-        std::stringstream buffer;
-        buffer << f.rdbuf();
-        this->reset();
-        return buffer.str();
-    }
+    // read each line as array of str
+    vec<str> readlines();
 
-    vec<str> readlines() {
-        vec<str> result;
-        std::string line;
-        while (std::getline(f, line)) {
-            result.push_back(line);
-        }
-        this->reset();
-        return result;
-    }
+    // move file cursor back to beginning of file for re-reading
+    void reset();
 
-    void reset() {
-        f.clear();
-        f.seekg(0, std::ios::beg);
-    }
-
-    ~File() { f.close(); }
+    ~File();
 
   private:
     std::fstream f;
