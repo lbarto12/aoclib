@@ -14,9 +14,9 @@
 #include "regex/regex.h"
 
 // root level
-#include "concepts"
+#include "concepts.h"
 #include "debug.h"
-#include "error.h"
+#include "errors.h"
 #include "generic.h"
 #include "index.h"
 #include "slice.h"

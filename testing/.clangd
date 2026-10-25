@@ -1,0 +1,13 @@
+Completion:
+  HeaderInsertion: Never
+Diagnostics:
+  MissingIncludes: None
+  UnusedIncludes: None
+  Suppress: [pp_including_mainfile_in_preamble]
+CompileFlags:
+  Add: [-std=c++23, "-I/home/liam/Desktop/Important Things/programming/cpp/aoclib"]
+---
+If:
+  PathMatch: .*\.tpp
+CompileFlags:
+  Add: [-xc++-header]
