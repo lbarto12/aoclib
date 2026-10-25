@@ -23,4 +23,8 @@ struct IndexError : public std::out_of_range {
 struct ValueError : public std::invalid_argument {
     explicit ValueError(const std::string& what = "Invalid value") : std::invalid_argument(what) {}
 };
+
+struct KeyError : public std::out_of_range {
+    explicit KeyError(const std::string& what = "Key not found") : std::out_of_range(what) {}
+};
 } // namespace aoc

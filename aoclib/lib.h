@@ -4,6 +4,7 @@
 #include "ds/DSU.h"
 #include "ds/Matrix.h"
 #include "ds/Vector2.h"
+#include "ds/dict/dict.h"
 #include "ds/strings/str.h"
 #include "ds/vector/vec.h"
 

@@ -3,9 +3,7 @@
 using namespace aoc;
 
 int main() {
-    vec<str> lines = File("input.txt").readlines();
-    vec<str> x = {"1", "2", "3"};
-    vec<int> asints = map(x, [&](const str& s) -> int { return int(s); });
+    dict<str, int> d = {{"hello", 1}, {"world", 2}};
 
-    println(asints);
+    println(d);
 }
