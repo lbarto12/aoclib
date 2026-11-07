@@ -1,5 +1,4 @@
 #pragma once
-// IWYU pragma: private, include <aoclib/lib.h>
 
 // DS
 #include "ds/DSU.h"             // IWYU pragma: export
