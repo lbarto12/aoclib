@@ -1,25 +1,25 @@
 #pragma once
 
 // DS
-#include "ds/DSU.h"
-#include "ds/Matrix.h"
-#include "ds/Vector2.h"
-#include "ds/counter/Counter.h"
-#include "ds/dict/dict.h"
-#include "ds/strings/str.h"
-#include "ds/vector/vec.h"
+#include "ds/DSU.h"             // IWYU pragma: export
+#include "ds/Matrix.h"          // IWYU pragma: export
+#include "ds/Vector2.h"         // IWYU pragma: export
+#include "ds/counter/Counter.h" // IWYU pragma: export
+#include "ds/dict/dict.h"       // IWYU pragma: export
+#include "ds/strings/str.h"     // IWYU pragma: export
+#include "ds/vector/vec.h"      // IWYU pragma: export
 
 // IO
-#include "files/File.h"
+#include "files/File.h" // IWYU pragma: export
 
 // regex
-#include "regex/regex.h"
+#include "regex/regex.h" // IWYU pragma: export
 
 // root level
-#include "concepts.h"
-#include "debug.h"
-#include "errors.h"
-#include "generic.h"
-#include "index.h"
-#include "slice.h"
-#include "timing.h"
+#include "concepts.h" // IWYU pragma: export
+#include "debug.h"    // IWYU pragma: export
+#include "errors.h"   // IWYU pragma: export
+#include "generic.h"  // IWYU pragma: export
+#include "index.h"    // IWYU pragma: export
+#include "slice.h"    // IWYU pragma: export
+#include "timing.h"   // IWYU pragma: export
