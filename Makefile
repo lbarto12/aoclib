@@ -28,6 +28,9 @@ run: $(TARGET)
 clean:
 	rm -f $(TARGET) $(LIB) $(OBJS) $(DEPS)
 
+build:
+	cmake --build build -j
+
 -include $(DEPS)
 
 .PHONY: all lib run clean

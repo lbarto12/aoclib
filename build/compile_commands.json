@@ -1,0 +1,50 @@
+[
+{
+  "directory": "/home/liam/Desktop/Important Things/programming/cpp/aoclib/build",
+  "command": "/usr/bin/c++  -I\"/home/liam/Desktop/Important Things/programming/cpp/aoclib\" -O3 -DNDEBUG -o CMakeFiles/aoclib.dir/aoclib/ds/strings/properties.cpp.o -c \"/home/liam/Desktop/Important Things/programming/cpp/aoclib/aoclib/ds/strings/properties.cpp\"",
+  "file": "/home/liam/Desktop/Important Things/programming/cpp/aoclib/aoclib/ds/strings/properties.cpp",
+  "output": "CMakeFiles/aoclib.dir/aoclib/ds/strings/properties.cpp.o"
+},
+{
+  "directory": "/home/liam/Desktop/Important Things/programming/cpp/aoclib/build",
+  "command": "/usr/bin/c++  -I\"/home/liam/Desktop/Important Things/programming/cpp/aoclib\" -O3 -DNDEBUG -o CMakeFiles/aoclib.dir/aoclib/ds/strings/replace.cpp.o -c \"/home/liam/Desktop/Important Things/programming/cpp/aoclib/aoclib/ds/strings/replace.cpp\"",
+  "file": "/home/liam/Desktop/Important Things/programming/cpp/aoclib/aoclib/ds/strings/replace.cpp",
+  "output": "CMakeFiles/aoclib.dir/aoclib/ds/strings/replace.cpp.o"
+},
+{
+  "directory": "/home/liam/Desktop/Important Things/programming/cpp/aoclib/build",
+  "command": "/usr/bin/c++  -I\"/home/liam/Desktop/Important Things/programming/cpp/aoclib\" -O3 -DNDEBUG -o CMakeFiles/aoclib.dir/aoclib/ds/strings/slice.cpp.o -c \"/home/liam/Desktop/Important Things/programming/cpp/aoclib/aoclib/ds/strings/slice.cpp\"",
+  "file": "/home/liam/Desktop/Important Things/programming/cpp/aoclib/aoclib/ds/strings/slice.cpp",
+  "output": "CMakeFiles/aoclib.dir/aoclib/ds/strings/slice.cpp.o"
+},
+{
+  "directory": "/home/liam/Desktop/Important Things/programming/cpp/aoclib/build",
+  "command": "/usr/bin/c++  -I\"/home/liam/Desktop/Important Things/programming/cpp/aoclib\" -O3 -DNDEBUG -o CMakeFiles/aoclib.dir/aoclib/ds/strings/split.cpp.o -c \"/home/liam/Desktop/Important Things/programming/cpp/aoclib/aoclib/ds/strings/split.cpp\"",
+  "file": "/home/liam/Desktop/Important Things/programming/cpp/aoclib/aoclib/ds/strings/split.cpp",
+  "output": "CMakeFiles/aoclib.dir/aoclib/ds/strings/split.cpp.o"
+},
+{
+  "directory": "/home/liam/Desktop/Important Things/programming/cpp/aoclib/build",
+  "command": "/usr/bin/c++  -I\"/home/liam/Desktop/Important Things/programming/cpp/aoclib\" -O3 -DNDEBUG -o CMakeFiles/aoclib.dir/aoclib/files/destroy.cpp.o -c \"/home/liam/Desktop/Important Things/programming/cpp/aoclib/aoclib/files/destroy.cpp\"",
+  "file": "/home/liam/Desktop/Important Things/programming/cpp/aoclib/aoclib/files/destroy.cpp",
+  "output": "CMakeFiles/aoclib.dir/aoclib/files/destroy.cpp.o"
+},
+{
+  "directory": "/home/liam/Desktop/Important Things/programming/cpp/aoclib/build",
+  "command": "/usr/bin/c++  -I\"/home/liam/Desktop/Important Things/programming/cpp/aoclib\" -O3 -DNDEBUG -o CMakeFiles/aoclib.dir/aoclib/files/init.cpp.o -c \"/home/liam/Desktop/Important Things/programming/cpp/aoclib/aoclib/files/init.cpp\"",
+  "file": "/home/liam/Desktop/Important Things/programming/cpp/aoclib/aoclib/files/init.cpp",
+  "output": "CMakeFiles/aoclib.dir/aoclib/files/init.cpp.o"
+},
+{
+  "directory": "/home/liam/Desktop/Important Things/programming/cpp/aoclib/build",
+  "command": "/usr/bin/c++  -I\"/home/liam/Desktop/Important Things/programming/cpp/aoclib\" -O3 -DNDEBUG -o CMakeFiles/aoclib.dir/aoclib/files/read.cpp.o -c \"/home/liam/Desktop/Important Things/programming/cpp/aoclib/aoclib/files/read.cpp\"",
+  "file": "/home/liam/Desktop/Important Things/programming/cpp/aoclib/aoclib/files/read.cpp",
+  "output": "CMakeFiles/aoclib.dir/aoclib/files/read.cpp.o"
+},
+{
+  "directory": "/home/liam/Desktop/Important Things/programming/cpp/aoclib/build",
+  "command": "/usr/bin/c++  -I\"/home/liam/Desktop/Important Things/programming/cpp/aoclib\" -O3 -DNDEBUG -o CMakeFiles/aoclib.dir/aoclib/files/reset.cpp.o -c \"/home/liam/Desktop/Important Things/programming/cpp/aoclib/aoclib/files/reset.cpp\"",
+  "file": "/home/liam/Desktop/Important Things/programming/cpp/aoclib/aoclib/files/reset.cpp",
+  "output": "CMakeFiles/aoclib.dir/aoclib/files/reset.cpp.o"
+}
+]

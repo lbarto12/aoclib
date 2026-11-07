@@ -1,0 +1,2 @@
+/usr/bin/ar qc libaoclib.a CMakeFiles/aoclib.dir/aoclib/ds/strings/properties.cpp.o CMakeFiles/aoclib.dir/aoclib/ds/strings/replace.cpp.o CMakeFiles/aoclib.dir/aoclib/ds/strings/slice.cpp.o CMakeFiles/aoclib.dir/aoclib/ds/strings/split.cpp.o CMakeFiles/aoclib.dir/aoclib/files/destroy.cpp.o CMakeFiles/aoclib.dir/aoclib/files/init.cpp.o CMakeFiles/aoclib.dir/aoclib/files/read.cpp.o CMakeFiles/aoclib.dir/aoclib/files/reset.cpp.o
+/usr/bin/ranlib libaoclib.a
