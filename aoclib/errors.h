@@ -1,4 +1,5 @@
 #pragma once
+// IWYU pragma: private, include <aoclib/lib.h>
 
 #include <stdexcept>
 #include <string>

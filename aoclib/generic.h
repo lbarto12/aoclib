@@ -1,4 +1,5 @@
 #pragma once
+// IWYU pragma: private, include <aoclib/lib.h>
 
 #include "concepts.h"
 #include "ds/vector/vec.h"
