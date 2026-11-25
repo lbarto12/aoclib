@@ -72,8 +72,8 @@ template <typename T> struct Matrix2D {
 
     const vec<T>& operator[](size_t index) const { return mtx[index]; }
 
-    T& at(const Vector2i& pos) { return mtx[pos.y][pos.x]; }
-    const T& at(const Vector2i& pos) const { return mtx[pos.y][pos.x]; }
+    T& at(const vec2i& pos) { return mtx[pos.y][pos.x]; }
+    const T& at(const vec2i& pos) const { return mtx[pos.y][pos.x]; }
 
   private:
     vec<vec<T>> mtx;

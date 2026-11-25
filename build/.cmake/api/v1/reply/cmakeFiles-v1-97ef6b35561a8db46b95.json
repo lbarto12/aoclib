@@ -1,0 +1,179 @@
+{
+	"globsDependent" : 
+	[
+		{
+			"expression" : "/home/liam/Desktop/Important Things/programming/cpp/aoclib/aoclib/*.cpp",
+			"paths" : 
+			[
+				"/home/liam/Desktop/Important Things/programming/cpp/aoclib/aoclib/ds/strings/properties.cpp",
+				"/home/liam/Desktop/Important Things/programming/cpp/aoclib/aoclib/ds/strings/replace.cpp",
+				"/home/liam/Desktop/Important Things/programming/cpp/aoclib/aoclib/ds/strings/slice.cpp",
+				"/home/liam/Desktop/Important Things/programming/cpp/aoclib/aoclib/ds/strings/split.cpp",
+				"/home/liam/Desktop/Important Things/programming/cpp/aoclib/aoclib/files/destroy.cpp",
+				"/home/liam/Desktop/Important Things/programming/cpp/aoclib/aoclib/files/init.cpp",
+				"/home/liam/Desktop/Important Things/programming/cpp/aoclib/aoclib/files/read.cpp",
+				"/home/liam/Desktop/Important Things/programming/cpp/aoclib/aoclib/files/reset.cpp"
+			],
+			"recurse" : true
+		},
+		{
+			"expression" : "/home/liam/Desktop/Important Things/programming/cpp/aoclib/aoclib/*.h",
+			"paths" : 
+			[
+				"/home/liam/Desktop/Important Things/programming/cpp/aoclib/aoclib/concepts.h",
+				"/home/liam/Desktop/Important Things/programming/cpp/aoclib/aoclib/debug.h",
+				"/home/liam/Desktop/Important Things/programming/cpp/aoclib/aoclib/ds/DSU.h",
+				"/home/liam/Desktop/Important Things/programming/cpp/aoclib/aoclib/ds/Matrix.h",
+				"/home/liam/Desktop/Important Things/programming/cpp/aoclib/aoclib/ds/Vector2.h",
+				"/home/liam/Desktop/Important Things/programming/cpp/aoclib/aoclib/ds/counter/Counter.h",
+				"/home/liam/Desktop/Important Things/programming/cpp/aoclib/aoclib/ds/dict/dict.h",
+				"/home/liam/Desktop/Important Things/programming/cpp/aoclib/aoclib/ds/strings/str.h",
+				"/home/liam/Desktop/Important Things/programming/cpp/aoclib/aoclib/ds/vector/vec.h",
+				"/home/liam/Desktop/Important Things/programming/cpp/aoclib/aoclib/errors.h",
+				"/home/liam/Desktop/Important Things/programming/cpp/aoclib/aoclib/files/File.h",
+				"/home/liam/Desktop/Important Things/programming/cpp/aoclib/aoclib/generic.h",
+				"/home/liam/Desktop/Important Things/programming/cpp/aoclib/aoclib/index.h",
+				"/home/liam/Desktop/Important Things/programming/cpp/aoclib/aoclib/lib.h",
+				"/home/liam/Desktop/Important Things/programming/cpp/aoclib/aoclib/regex/regex.h",
+				"/home/liam/Desktop/Important Things/programming/cpp/aoclib/aoclib/slice.h",
+				"/home/liam/Desktop/Important Things/programming/cpp/aoclib/aoclib/timing.h"
+			],
+			"recurse" : true
+		}
+	],
+	"inputs" : 
+	[
+		{
+			"path" : "CMakeLists.txt"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "build/CMakeFiles/4.4.4/CMakeSystem.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/share/cmake/Modules/CMakeSystemSpecificInitialize.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/share/cmake/Modules/Platform/Linux-Initialize.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "build/CMakeFiles/4.4.4/CMakeCXXCompiler.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/share/cmake/Modules/CMakeSystemSpecificInformation.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/share/cmake/Modules/CMakeGenericSystem.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/share/cmake/Modules/CMakeInitializeConfigs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/share/cmake/Modules/Platform/Linux.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/share/cmake/Modules/Platform/UnixPaths.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/share/cmake/Modules/CMakeCXXInformation.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/share/cmake/Modules/CMakeLanguageInformation.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/share/cmake/Modules/Compiler/GNU-CXX.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/share/cmake/Modules/Compiler/GNU.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/share/cmake/Modules/Compiler/CMakeCommonCompilerMacros.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/share/cmake/Modules/Platform/Linux-GNU-CXX.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/share/cmake/Modules/Platform/Linux-GNU.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/share/cmake/Modules/CMakeCommonLanguageInclude.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/share/cmake/Modules/Internal/CMakeCXXLinkerInformation.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/share/cmake/Modules/Internal/CMakeCommonLinkerInformation.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/share/cmake/Modules/Linker/GNU-CXX.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/share/cmake/Modules/Linker/GNU.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/share/cmake/Modules/Platform/Linker/Linux-GNU-CXX.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/share/cmake/Modules/Platform/Linker/Linux-GNU.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/share/cmake/Modules/Platform/Linker/GNU.cmake"
+		}
+	],
+	"kind" : "cmakeFiles",
+	"paths" : 
+	{
+		"build" : "/home/liam/Desktop/Important Things/programming/cpp/aoclib/build",
+		"source" : "/home/liam/Desktop/Important Things/programming/cpp/aoclib"
+	},
+	"version" : 
+	{
+		"major" : 1,
+		"minor" : 1
+	}
+}

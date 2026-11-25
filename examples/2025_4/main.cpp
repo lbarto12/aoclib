@@ -7,13 +7,13 @@
 
 using namespace aoc;
 
-std::tuple<std::size_t, std::unordered_set<Vector2i>> forklift(const vec<vec<char>>& floor) {
+std::tuple<std::size_t, std::unordered_set<vec2i>> forklift(const vec<vec<char>>& floor) {
     int w = floor[0].size(), h = floor.size();
-    std::unordered_set<Vector2i> valid;
+    std::unordered_set<vec2i> valid;
     std::size_t result = 0;
     for (const auto& [y, line] : enumerate(floor)) {
         for (const auto& [x, c] : enumerate(line)) {
-            std::size_t adj = sum(map(Vector2i(x, y).adjacent8(), [w, h, &floor](const Vector2i& pos) -> int {
+            std::size_t adj = sum(map(vec2i(x, y).adjacent8(), [w, h, &floor](const vec2i& pos) -> int {
                 const auto& [cx, cy] = pos;
                 return int(0 <= cx && cx < w && 0 <= cy && cy < h && floor[cy][cx] == '@');
             }));
